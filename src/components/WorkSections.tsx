@@ -5,46 +5,27 @@ import { IconPlay } from "./Icons";
 import { Carousel } from "./Carousel";
 
 export function UIUX({ onView, onOpen }: { onView: (c: Category) => void; onOpen: (src: string) => void }) {
-  const items = [
-    {
-      key: "laptop",
-      node: (
-        <button
-          onClick={() => onOpen("/images/ui-laptop.png")}
-          className="h-[210px] w-[280px] overflow-hidden rounded-2xl md:h-[250px] md:w-[320px]"
-        >
-          <img
-            src="/images/ui-laptop.png"
-            alt="Product dashboard on laptop"
-            className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
-          />
-        </button>
-      ),
-    },
-    {
-      key: "phone",
-      node: (
-        <div className="h-[210px] w-[140px] md:h-[250px] md:w-[150px]">
-          <PhoneMockup />
-        </div>
-      ),
-    },
-    {
-      key: "dashboard",
-      node: (
-        <div className="h-[210px] w-[140px] md:h-[250px] md:w-[150px]">
-          <DashboardMockup />
-        </div>
-      ),
-    },
-    {
-      key: "website",
-      node: (
-        <div className="h-[210px] w-[200px] md:h-[250px] md:w-[220px]">
-          <WebsiteMockup />
-        </div>
-      ),
-    },
+  const slides = [
+    <button
+      key="laptop"
+      onClick={() => onOpen("/images/ui-laptop.png")}
+      className="h-[210px] w-[280px] overflow-hidden rounded-2xl md:h-[250px] md:w-[320px]"
+    >
+      <img
+        src="/images/ui-laptop.png"
+        alt="Product dashboard on laptop"
+        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
+      />
+    </button>,
+    <div key="phone" className="h-[210px] w-[140px] md:h-[250px] md:w-[150px]">
+      <PhoneMockup />
+    </div>,
+    <div key="dashboard" className="h-[210px] w-[140px] md:h-[250px] md:w-[150px]">
+      <DashboardMockup />
+    </div>,
+    <div key="website" className="h-[210px] w-[200px] md:h-[250px] md:w-[220px]">
+      <WebsiteMockup />
+    </div>,
   ];
 
   return (
@@ -61,12 +42,8 @@ export function UIUX({ onView, onOpen }: { onView: (c: Category) => void; onOpen
           <ViewLink onClick={() => onView("uiux")} />
         </Reveal>
 
-        <div className="lg:col-span-8">
-          <Carousel itemWidth={200} className="w-full">
-            {items.map((item) => (
-              <div key={item.key}>{item.node}</div>
-            ))}
-          </Carousel>
+        <div className="lg:col-span-8 overflow-hidden">
+          <Carousel autoPlay={4500}>{slides}</Carousel>
         </div>
       </div>
     </section>
@@ -81,28 +58,28 @@ const posters = [
 ];
 
 export function Graphic({ onView, onOpen }: { onView: (c: Category) => void; onOpen: (src: string) => void }) {
+  const slides = posters.map((p) => (
+    <button
+      key={p.src}
+      onClick={() => onOpen(p.src)}
+      className="group relative h-[210px] w-[150px] overflow-hidden rounded-2xl sm:h-[230px] sm:w-[160px]"
+    >
+      <img
+        src={p.src}
+        alt={p.title}
+        className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
+      />
+      <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3 text-left text-[11px] text-white opacity-0 transition group-hover:opacity-100">
+        {p.title}
+      </span>
+    </button>
+  ));
+
   return (
     <section id="graphic" className="border-b border-white/6">
       <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-5 py-16 lg:grid-cols-12 lg:px-8 lg:py-20">
-        <div className="lg:col-span-7">
-          <Carousel itemWidth={160} className="w-full">
-            {posters.map((p) => (
-              <button
-                key={p.src}
-                onClick={() => onOpen(p.src)}
-                className="group relative h-[210px] w-[150px] overflow-hidden rounded-2xl sm:h-[230px] sm:w-[160px]"
-              >
-                <img
-                  src={p.src}
-                  alt={p.title}
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
-                />
-                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3 text-left text-[11px] text-white opacity-0 transition group-hover:opacity-100">
-                  {p.title}
-                </span>
-              </button>
-            ))}
-          </Carousel>
+        <div className="lg:col-span-7 overflow-hidden">
+          <Carousel autoPlay={4000}>{slides}</Carousel>
         </div>
 
         <Reveal className="lg:col-span-5 lg:pl-8">
@@ -143,6 +120,38 @@ export function Video({
   onPlay: () => void;
   onOpen: (src: string) => void;
 }) {
+  const slides = [
+    <button
+      key="camera"
+      onClick={onPlay}
+      className="group relative h-[220px] w-[320px] overflow-hidden rounded-2xl sm:h-[280px] sm:w-[380px]"
+    >
+      <img
+        src="/images/video-camera.png"
+        alt="Cinema camera"
+        className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+      />
+      <div className="absolute inset-0 bg-black/20" />
+      <span className="absolute top-1/2 left-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#0b0d14] shadow-xl">
+        <span className="pulse-ring absolute inset-0 rounded-full bg-white/40" />
+        <IconPlay size={22} />
+      </span>
+    </button>,
+    ...videoThumbs.map((t) => (
+      <button
+        key={t.src}
+        onClick={() => onOpen(t.src)}
+        className="h-[220px] w-[180px] overflow-hidden rounded-2xl sm:h-[280px] sm:w-[200px]"
+      >
+        <img
+          src={t.src}
+          alt={t.title}
+          className="h-full w-full object-cover transition duration-500 hover:scale-105"
+        />
+      </button>
+    )),
+  ];
+
   return (
     <section id="video" className="border-b border-white/6">
       <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-5 py-16 lg:grid-cols-12 lg:px-8 lg:py-20">
@@ -156,38 +165,8 @@ export function Video({
           <ViewLink onClick={() => onView("video")} />
         </Reveal>
 
-        <div className="lg:col-span-8">
-          <Carousel itemWidth={240} className="w-full">
-            <button
-              onClick={onPlay}
-              className="group relative h-[220px] w-[320px] overflow-hidden rounded-2xl sm:h-[280px] sm:w-[380px]"
-            >
-              <img
-                src="/images/video-camera.png"
-                alt="Cinema camera"
-                className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
-              />
-              <div className="absolute inset-0 bg-black/20" />
-              <span className="absolute top-1/2 left-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#0b0d14] shadow-xl">
-                <span className="pulse-ring absolute inset-0 rounded-full bg-white/40" />
-                <IconPlay size={22} />
-              </span>
-            </button>
-
-            {videoThumbs.map((t) => (
-              <button
-                key={t.src}
-                onClick={() => onOpen(t.src)}
-                className="h-[220px] w-[180px] overflow-hidden rounded-2xl sm:h-[280px] sm:w-[200px]"
-              >
-                <img
-                  src={t.src}
-                  alt={t.title}
-                  className="h-full w-full object-cover transition duration-500 hover:scale-105"
-                />
-              </button>
-            ))}
-          </Carousel>
+        <div className="lg:col-span-8 overflow-hidden">
+          <Carousel autoPlay={5000}>{slides}</Carousel>
         </div>
       </div>
     </section>
@@ -195,68 +174,46 @@ export function Video({
 }
 
 export function Content({ onView, onOpen }: { onView: (c: Category) => void; onOpen: (src: string) => void }) {
-  const contentItems = [
-    {
-      key: "ideas",
-      node: (
-        <div className="h-[210px] w-[160px] sm:h-[230px] sm:w-[170px]">
-          <IdeasCard />
-        </div>
-      ),
-    },
-    {
-      key: "social",
-      node: (
-        <div className="h-[210px] w-[160px] sm:h-[230px] sm:w-[170px]">
-          <SocialMockup />
-        </div>
-      ),
-    },
-    {
-      key: "laptop",
-      node: (
-        <button
-          onClick={() =>
-            onOpen("https://images.pexels.com/photos/1229862/pexels-photo-1229862.jpeg?auto=compress&cs=tinysrgb&w=1200")
-          }
-          className="h-[210px] w-[160px] overflow-hidden rounded-2xl sm:h-[230px] sm:w-[170px]"
-        >
-          <img
-            src="https://images.pexels.com/photos/1229862/pexels-photo-1229862.jpeg?auto=compress&cs=tinysrgb&w=800"
-            alt="Laptop and coffee"
-            className="h-full w-full object-cover transition duration-500 hover:scale-[1.05]"
-          />
-        </button>
-      ),
-    },
-    {
-      key: "mountain",
-      node: (
-        <button
-          onClick={() =>
-            onOpen("https://images.pexels.com/photos/35711550/pexels-photo-35711550.jpeg?auto=compress&cs=tinysrgb&w=1200")
-          }
-          className="h-[210px] w-[160px] overflow-hidden rounded-2xl sm:h-[230px] sm:w-[170px]"
-        >
-          <img
-            src="https://images.pexels.com/photos/35711550/pexels-photo-35711550.jpeg?auto=compress&cs=tinysrgb&w=800"
-            alt="Looking at the mountains"
-            className="h-full w-full object-cover transition duration-500 hover:scale-[1.05]"
-          />
-        </button>
-      ),
-    },
+  const slides = [
+    <div key="ideas" className="h-[210px] w-[160px] sm:h-[230px] sm:w-[170px]">
+      <IdeasCard />
+    </div>,
+    <div key="social" className="h-[210px] w-[160px] sm:h-[230px] sm:w-[170px]">
+      <SocialMockup />
+    </div>,
+    <button
+      key="laptop"
+      onClick={() =>
+        onOpen("https://images.pexels.com/photos/1229862/pexels-photo-1229862.jpeg?auto=compress&cs=tinysrgb&w=1200")
+      }
+      className="h-[210px] w-[160px] overflow-hidden rounded-2xl sm:h-[230px] sm:w-[170px]"
+    >
+      <img
+        src="https://images.pexels.com/photos/1229862/pexels-photo-1229862.jpeg?auto=compress&cs=tinysrgb&w=800"
+        alt="Laptop and coffee"
+        className="h-full w-full object-cover transition duration-500 hover:scale-[1.05]"
+      />
+    </button>,
+    <button
+      key="mountain"
+      onClick={() =>
+        onOpen("https://images.pexels.com/photos/35711550/pexels-photo-35711550.jpeg?auto=compress&cs=tinysrgb&w=1200")
+      }
+      className="h-[210px] w-[160px] overflow-hidden rounded-2xl sm:h-[230px] sm:w-[170px]"
+    >
+      <img
+        src="https://images.pexels.com/photos/35711550/pexels-photo-35711550.jpeg?auto=compress&cs=tinysrgb&w=800"
+        alt="Looking at the mountains"
+        className="h-full w-full object-cover transition duration-500 hover:scale-[1.05]"
+      />
+    </button>,
   ];
 
   return (
     <section id="content" className="border-b border-white/6">
       <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-5 py-16 lg:grid-cols-12 lg:px-8 lg:py-20">
-        <div className="lg:col-span-7">
-          <Carousel itemWidth={170} className="w-full">
-            {contentItems.map((item) => (
-              <div key={item.key}>{item.node}</div>
-            ))}
-          </Carousel>
+        <div className="lg:col-span-7 overflow-hidden">
+          <Carousel autoPlay={4200}>{slides}</Carousel>
         </div>
 
         <Reveal className="lg:col-span-5 lg:pl-8">
