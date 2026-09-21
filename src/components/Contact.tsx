@@ -44,9 +44,9 @@ export function Contact() {
         </Reveal>
 
         <Reveal delay={80} className="flex flex-col justify-center gap-6 lg:col-span-3">
-          <Info icon={<IconMail size={16} />} label="Email" value="abhishek@gmail.com" href="mailto:abhishek@gmail.com" />
-          <Info icon={<IconPhone size={16} />} label="Phone" value="+91 98765 43210" href="tel:+919876543210" />
-          <Info icon={<IconPin size={16} />} label="Location" value="India" />
+          <Info icon={<IconMail size={16} />} label="Email" value="iabhishekbhardwaj07@gmail.com" href="mailto:iabhishekbhardwaj07@gmail.com" />
+          <Info icon={<IconPhone size={16} />} label="Phone" value="+91 98827 00510" href="tel:+919882700510" />
+          <Info icon={<IconPin size={16} />} label="Location" value="Mandi, Himachal Pradesh" />
         </Reveal>
 
         <Reveal delay={140} className="lg:col-span-5">
