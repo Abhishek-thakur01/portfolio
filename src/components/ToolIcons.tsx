@@ -41,6 +41,12 @@ export function ToolIcon({ id }: { id: string }) {
           <path d="M17.5 4.2V19.8L9 13.5L17.5 4.2Z" fill="#1F9CF0" />
         </svg>
       );
+    case "canva":
+      return (
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#00C4CC]">
+          <span className="text-[10px] font-bold text-white">Ca</span>
+        </div>
+      );
     case "capcut":
       return (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
