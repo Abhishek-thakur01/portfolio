@@ -1,0 +1,38 @@
+[
+  {
+    "id": "p1",
+    "title": "Accessories Website UI",
+    "category": "uiux",
+    "type": "UI Mockup",
+    "image": "/images/ui-laptop.png",
+    "tags": ["Figma", "Wireframe", "UI"],
+    "description": "Created a basic wireframe and UI mockup of an Accessories Website using Figma."
+  },
+  {
+    "id": "p2",
+    "title": "Social Media Campaign",
+    "category": "content",
+    "type": "Campaign",
+    "image": "/images/content-impact.png",
+    "tags": ["Canva", "Figma", "CapCut"],
+    "description": "Designed Instagram and Facebook post templates, videos and gifs for real brands."
+  },
+  {
+    "id": "p3",
+    "title": "Brand Identity",
+    "category": "graphic",
+    "type": "Branding",
+    "image": "/images/poster-brand.png",
+    "tags": ["Logo", "Stationery", "Illustrator"],
+    "description": "Developed branding elements (logo, business card, letterhead) for companies."
+  },
+  {
+    "id": "p4",
+    "title": "Poster & Banner Design",
+    "category": "graphic",
+    "type": "Graphic",
+    "image": "/images/poster-good-things.png",
+    "tags": ["Poster", "Banner", "Print"],
+    "description": "High-impact posters and banners designed for brand campaigns."
+  }
+]
