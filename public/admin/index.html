@@ -1,75 +1,12 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Content Manager | Abhishek Thakur</title>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <title>Content Manager | Abhishek Thakur Portfolio</title>
+    <script src="https://unpkg.com/decap-cms@^3.3.3/dist/decap-cms.js"></script>
   </head>
   <body>
-    <script>
-      CMS.init({
-        config: {
-          backend: {
-            name: "github",
-            repo: "Abhishek-thakur01/portfolio",
-            branch: "main",
-            base_url: "https://api.netlify.com",
-            auth_endpoint: "auth"
-          },
-          media_folder: "public/images",
-          public_folder: "/images",
-          collections: [
-            {
-              name: "settings",
-              label: "Site Settings",
-              files: [
-                {
-                  name: "general",
-                  label: "General Info",
-                  file: "src/content/site.json",
-                  fields: [
-                    { label: "Name", name: "name", widget: "string" },
-                    { label: "Title", name: "title", widget: "string" },
-                    { label: "About Text", name: "about", widget: "text" },
-                    { label: "Email", name: "email", widget: "string" },
-                    { label: "Phone", name: "phone", widget: "string" },
-                    { label: "Location", name: "location", widget: "string" }
-                  ]
-                }
-              ]
-            },
-            {
-              name: "projects",
-              label: "Projects",
-              folder: "src/content/projects",
-              create: true,
-              slug: "{{slug}}",
-              fields: [
-                { label: "Title", name: "title", widget: "string" },
-                { label: "Category", name: "category", widget: "select", options: ["uiux", "graphic", "video", "content"] },
-                { label: "Type", name: "type", widget: "string" },
-                { label: "Image", name: "image", widget: "image" },
-                { label: "Tags", name: "tags", widget: "list" },
-                { label: "Description", name: "description", widget: "text" }
-              ]
-            },
-            {
-              name: "experience",
-              label: "Experience",
-              folder: "src/content/experience",
-              create: true,
-              slug: "{{year}}",
-              fields: [
-                { label: "Years", name: "years", widget: "string" },
-                { label: "Role", name: "role", widget: "string" },
-                { label: "Company", name: "place", widget: "string" },
-                { label: "Tags", name: "tags", widget: "string" }
-              ]
-            }
-          ]
-        }
-      });
-    </script>
+    <!-- Decap CMS will load config from /admin/config.yml -->
   </body>
 </html>
