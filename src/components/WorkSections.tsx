@@ -1,5 +1,4 @@
 import type { Category } from "../data";
-import { IdeasCard } from "./Mockups";
 import { Reveal, SectionLabel, ViewLink } from "./Reveal";
 import { IconPlay } from "./Icons";
 import { Carousel } from "./Carousel";
@@ -199,33 +198,56 @@ export function Video({
 
 export function Content({ onView, onOpen }: { onView: (c: Category) => void; onOpen: (src: string) => void }) {
   const slides = [
-    <div key="ideas" className="h-[210px] w-[160px] sm:h-[230px] sm:w-[170px]">
-      <IdeasCard />
-    </div>,
     <button
-      key="laptop"
+      key="content-1"
       onClick={() =>
         onOpen("https://images.pexels.com/photos/1229862/pexels-photo-1229862.jpeg?auto=compress&cs=tinysrgb&w=1200")
       }
-      className="h-[210px] w-[160px] overflow-hidden rounded-2xl sm:h-[230px] sm:w-[170px]"
+      className="h-[220px] w-[200px] overflow-hidden rounded-2xl sm:h-[240px] sm:w-[220px]"
     >
       <img
         src="https://images.pexels.com/photos/1229862/pexels-photo-1229862.jpeg?auto=compress&cs=tinysrgb&w=800"
-        alt="Laptop and coffee"
-        className="h-full w-full object-cover transition duration-500 hover:scale-[1.05]"
+        alt="Workspace"
+        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
       />
     </button>,
     <button
-      key="mountain"
+      key="content-2"
       onClick={() =>
         onOpen("https://images.pexels.com/photos/35711550/pexels-photo-35711550.jpeg?auto=compress&cs=tinysrgb&w=1200")
       }
-      className="h-[210px] w-[160px] overflow-hidden rounded-2xl sm:h-[230px] sm:w-[170px]"
+      className="h-[220px] w-[200px] overflow-hidden rounded-2xl sm:h-[240px] sm:w-[220px]"
     >
       <img
         src="https://images.pexels.com/photos/35711550/pexels-photo-35711550.jpeg?auto=compress&cs=tinysrgb&w=800"
-        alt="Looking at the mountains"
-        className="h-full w-full object-cover transition duration-500 hover:scale-[1.05]"
+        alt="Creative moment"
+        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
+      />
+    </button>,
+    <button
+      key="content-3"
+      onClick={() =>
+        onOpen("https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1200")
+      }
+      className="h-[220px] w-[200px] overflow-hidden rounded-2xl sm:h-[240px] sm:w-[220px]"
+    >
+      <img
+        src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800"
+        alt="Team collaboration"
+        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
+      />
+    </button>,
+    <button
+      key="content-4"
+      onClick={() =>
+        onOpen("https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1200")
+      }
+      className="h-[220px] w-[200px] overflow-hidden rounded-2xl sm:h-[240px] sm:w-[220px]"
+    >
+      <img
+        src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800"
+        alt="Content creation"
+        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
       />
     </button>,
   ];
