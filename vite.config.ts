@@ -10,6 +10,9 @@ const __dirname = path.dirname(__filename);
 
 // https://vite.dev/config/
 export default defineConfig({
+  // GitHub Pages ke liye base path (repo name)
+  // Vercel pe root pe deploy hoga to base: '/' kaam karega (Vercel auto handle karta hai)
+  base: process.env.GITHUB_PAGES === 'true' ? '/portfolio/' : '/',
   plugins: [react(), tailwindcss(), viteSingleFile()],
   resolve: {
     alias: {
