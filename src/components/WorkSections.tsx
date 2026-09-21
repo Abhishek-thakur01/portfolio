@@ -1,75 +1,119 @@
+import type { ReactNode } from "react";
 import type { Category } from "../data";
 import { Reveal, SectionLabel, ViewLink } from "./Reveal";
 import { IconPlay } from "./Icons";
 import { Carousel } from "./Carousel";
 
+function ImageCard({
+  src,
+  alt,
+  onOpen,
+  wide,
+}: {
+  src: string;
+  alt: string;
+  onOpen: (src: string) => void;
+  wide?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={() => onOpen(src)}
+      className={
+        wide
+          ? "group relative h-[240px] w-[340px] shrink-0 overflow-hidden rounded-2xl sm:h-[280px] sm:w-[400px]"
+          : "group relative h-[240px] w-[200px] shrink-0 overflow-hidden rounded-2xl sm:h-[280px] sm:w-[240px]"
+      }
+    >
+      <img
+        src={src}
+        alt={alt}
+        className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
+    </button>
+  );
+}
+
+function SectionShell({
+  id,
+  num,
+  title,
+  subtitle,
+  description,
+  onView,
+  category,
+  children,
+}: {
+  id: string;
+  num: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  onView: (c: Category) => void;
+  category: Category;
+  children: ReactNode;
+}) {
+  return (
+    <section id={id} className="border-b border-white/[0.06]">
+      <div className="mx-auto max-w-[1280px] px-5 py-16 lg:px-8 lg:py-24">
+        <Reveal className="max-w-2xl">
+          <SectionLabel num={num} />
+          <h2 className="mt-1 text-[28px] font-semibold tracking-tight text-white sm:text-[34px] lg:text-[40px]">
+            {title}
+          </h2>
+          <p className="mt-2 text-[13px] font-medium uppercase tracking-[0.14em] text-white/40">
+            {subtitle}
+          </p>
+          <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-white/50">
+            {description}
+          </p>
+          <ViewLink onClick={() => onView(category)} />
+        </Reveal>
+
+        <Reveal className="mt-10 overflow-hidden" delay={120}>
+          {children}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 export function UIUX({ onView, onOpen }: { onView: (c: Category) => void; onOpen: (src: string) => void }) {
   const slides = [
-    <button
-      key="laptop"
-      onClick={() => onOpen("/images/ui-laptop.png")}
-      className="h-[210px] w-[280px] overflow-hidden rounded-2xl md:h-[250px] md:w-[320px]"
-    >
-      <img
-        src="/images/ui-laptop.png"
-        alt="Product dashboard on laptop"
-        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
-      />
-    </button>,
-    <button
-      key="ui-1"
-      onClick={() => onOpen("https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=1200")}
-      className="h-[210px] w-[180px] overflow-hidden rounded-2xl md:h-[250px] md:w-[200px]"
-    >
-      <img
-        src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800"
-        alt="UI design mockup"
-        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
-      />
-    </button>,
-    <button
-      key="ui-2"
-      onClick={() => onOpen("https://images.pexels.com/photos/326503/pexels-photo-326503.jpeg?auto=compress&cs=tinysrgb&w=1200")}
-      className="h-[210px] w-[180px] overflow-hidden rounded-2xl md:h-[250px] md:w-[200px]"
-    >
-      <img
-        src="https://images.pexels.com/photos/326503/pexels-photo-326503.jpeg?auto=compress&cs=tinysrgb&w=800"
-        alt="App interface"
-        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
-      />
-    </button>,
-    <button
-      key="ui-3"
-      onClick={() => onOpen("https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=1200")}
-      className="h-[210px] w-[180px] overflow-hidden rounded-2xl md:h-[250px] md:w-[200px]"
-    >
-      <img
-        src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800"
-        alt="Web design"
-        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
-      />
-    </button>,
+    <ImageCard key="laptop" wide src="/images/ui-laptop.png" alt="Product dashboard" onOpen={onOpen} />,
+    <ImageCard
+      key="ui1"
+      src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800"
+      alt="UI design"
+      onOpen={onOpen}
+    />,
+    <ImageCard
+      key="ui2"
+      src="https://images.pexels.com/photos/326503/pexels-photo-326503.jpeg?auto=compress&cs=tinysrgb&w=800"
+      alt="App interface"
+      onOpen={onOpen}
+    />,
+    <ImageCard
+      key="ui3"
+      src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800"
+      alt="Web design"
+      onOpen={onOpen}
+    />,
   ];
 
   return (
-    <section id="uiux" className="border-b border-white/6">
-      <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-5 py-16 lg:grid-cols-12 lg:px-8 lg:py-20">
-        <Reveal className="lg:col-span-4">
-          <SectionLabel num="01" />
-          <h2 className="text-[28px] font-semibold tracking-tight text-white lg:text-[32px]">UI/UX Design</h2>
-          <p className="mt-2 text-[14px] text-white/45">Websites / Apps / UX</p>
-          <p className="mt-4 max-w-[360px] text-[13.5px] leading-relaxed text-white/45">
-            I design intuitive and visually engaging experiences for web and mobile. From user research to final UI, I
-            focus on simplicity, usability and impact.
-          </p>
-          <ViewLink onClick={() => onView("uiux")} />
-        </Reveal>
-
-        <div className="lg:col-span-8 overflow-hidden">
-          <Carousel autoPlay={4500}>{slides}</Carousel>
-        </div>
-      </div>
-    </section>
+    <SectionShell
+      id="uiux"
+      num="01"
+      title="UI/UX Design"
+      subtitle="Websites  ·  Apps  ·  Product"
+      description="I design intuitive and visually engaging experiences for web and mobile. From research to final UI, I focus on clarity, usability and impact."
+      onView={onView}
+      category="uiux"
+    >
+      <Carousel autoPlay={4500}>{slides}</Carousel>
+    </SectionShell>
   );
 }
 
@@ -84,45 +128,40 @@ export function Graphic({ onView, onOpen }: { onView: (c: Category) => void; onO
   const slides = posters.map((p) => (
     <button
       key={p.src}
+      type="button"
       onClick={() => onOpen(p.src)}
-      className="group relative h-[210px] w-[150px] overflow-hidden rounded-2xl sm:h-[230px] sm:w-[160px]"
+      className="group relative h-[260px] w-[180px] shrink-0 overflow-hidden rounded-2xl sm:h-[300px] sm:w-[200px]"
     >
       <img
         src={p.src}
         alt={p.title}
-        className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
+        className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]"
       />
-      <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3 text-left text-[11px] text-white opacity-0 transition group-hover:opacity-100">
-        {p.title}
-      </span>
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 opacity-0 transition duration-500 group-hover:opacity-100">
+        <p className="text-left text-[12px] font-medium text-white">{p.title}</p>
+      </div>
     </button>
   ));
 
   return (
-    <section id="graphic" className="border-b border-white/6">
-      <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-5 py-16 lg:grid-cols-12 lg:px-8 lg:py-20">
-        <div className="lg:col-span-7 overflow-hidden">
-          <Carousel autoPlay={4000}>{slides}</Carousel>
-        </div>
-
-        <Reveal className="lg:col-span-5 lg:pl-8">
-          <SectionLabel num="02" />
-          <h2 className="text-[28px] font-semibold tracking-tight text-white uppercase lg:text-[32px]">Graphic Design</h2>
-          <p className="mt-2 text-[14px] text-white/45">Posters / Social / Campaigns</p>
-          <p className="mt-4 max-w-[380px] text-[13.5px] leading-relaxed text-white/45">
-            I create bold and meaningful designs that communicate ideas, build brands and leave a lasting impression.
-          </p>
-          <ViewLink onClick={() => onView("graphic")} />
-        </Reveal>
-      </div>
-    </section>
+    <SectionShell
+      id="graphic"
+      num="02"
+      title="Graphic Design"
+      subtitle="Posters  ·  Brand  ·  Campaigns"
+      description="I create bold and meaningful designs that communicate ideas, build brands and leave a lasting impression."
+      onView={onView}
+      category="graphic"
+    >
+      <Carousel autoPlay={4000}>{slides}</Carousel>
+    </SectionShell>
   );
 }
 
 const videoThumbs = [
   {
     src: "https://images.pexels.com/photos/2315049/pexels-photo-2315049.jpeg?auto=compress&cs=tinysrgb&w=800",
-    title: "Golden hour shoot",
+    title: "Golden hour",
   },
   {
     src: "https://images.pexels.com/photos/2446711/pexels-photo-2446711.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -146,129 +185,80 @@ export function Video({
   const slides = [
     <button
       key="camera"
+      type="button"
       onClick={onPlay}
-      className="group relative h-[220px] w-[320px] overflow-hidden rounded-2xl sm:h-[280px] sm:w-[380px]"
+      className="group relative h-[240px] w-[340px] shrink-0 overflow-hidden rounded-2xl sm:h-[280px] sm:w-[420px]"
     >
       <img
         src="/images/video-camera.png"
         alt="Cinema camera"
-        className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+        className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
       />
-      <div className="absolute inset-0 bg-black/20" />
-      <span className="absolute top-1/2 left-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#0b0d14] shadow-xl">
+      <div className="absolute inset-0 bg-black/25" />
+      <span className="absolute top-1/2 left-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#0b0d14] shadow-xl transition group-hover:scale-110">
         <span className="pulse-ring absolute inset-0 rounded-full bg-white/40" />
         <IconPlay size={22} />
       </span>
     </button>,
     ...videoThumbs.map((t) => (
-      <button
-        key={t.src}
-        onClick={() => onOpen(t.src)}
-        className="h-[220px] w-[180px] overflow-hidden rounded-2xl sm:h-[280px] sm:w-[200px]"
-      >
-        <img
-          src={t.src}
-          alt={t.title}
-          className="h-full w-full object-cover transition duration-500 hover:scale-105"
-        />
-      </button>
+      <ImageCard key={t.src} src={t.src} alt={t.title} onOpen={onOpen} />
     )),
   ];
 
   return (
-    <section id="video" className="border-b border-white/6">
-      <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-5 py-16 lg:grid-cols-12 lg:px-8 lg:py-20">
-        <Reveal className="lg:col-span-4">
-          <SectionLabel num="03" />
-          <h2 className="text-[28px] font-semibold tracking-tight text-white uppercase lg:text-[32px]">Video</h2>
-          <p className="mt-2 text-[14px] text-white/45">Reels / Shooting / Editing</p>
-          <p className="mt-4 max-w-[360px] text-[13.5px] leading-relaxed text-white/45">
-            I produce and edit engaging videos that tell stories, grab attention and bring ideas to life.
-          </p>
-          <ViewLink onClick={() => onView("video")} />
-        </Reveal>
-
-        <div className="lg:col-span-8 overflow-hidden">
-          <Carousel autoPlay={5000}>{slides}</Carousel>
-        </div>
-      </div>
-    </section>
+    <SectionShell
+      id="video"
+      num="03"
+      title="Video"
+      subtitle="Reels  ·  Shooting  ·  Editing"
+      description="I produce and edit engaging videos that tell stories, grab attention and bring ideas to life."
+      onView={onView}
+      category="video"
+    >
+      <Carousel autoPlay={5000}>{slides}</Carousel>
+    </SectionShell>
   );
 }
 
 export function Content({ onView, onOpen }: { onView: (c: Category) => void; onOpen: (src: string) => void }) {
   const slides = [
-    <button
-      key="content-1"
-      onClick={() =>
-        onOpen("https://images.pexels.com/photos/1229862/pexels-photo-1229862.jpeg?auto=compress&cs=tinysrgb&w=1200")
-      }
-      className="h-[220px] w-[200px] overflow-hidden rounded-2xl sm:h-[240px] sm:w-[220px]"
-    >
-      <img
-        src="https://images.pexels.com/photos/1229862/pexels-photo-1229862.jpeg?auto=compress&cs=tinysrgb&w=800"
-        alt="Workspace"
-        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
-      />
-    </button>,
-    <button
-      key="content-2"
-      onClick={() =>
-        onOpen("https://images.pexels.com/photos/35711550/pexels-photo-35711550.jpeg?auto=compress&cs=tinysrgb&w=1200")
-      }
-      className="h-[220px] w-[200px] overflow-hidden rounded-2xl sm:h-[240px] sm:w-[220px]"
-    >
-      <img
-        src="https://images.pexels.com/photos/35711550/pexels-photo-35711550.jpeg?auto=compress&cs=tinysrgb&w=800"
-        alt="Creative moment"
-        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
-      />
-    </button>,
-    <button
-      key="content-3"
-      onClick={() =>
-        onOpen("https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1200")
-      }
-      className="h-[220px] w-[200px] overflow-hidden rounded-2xl sm:h-[240px] sm:w-[220px]"
-    >
-      <img
-        src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800"
-        alt="Team collaboration"
-        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
-      />
-    </button>,
-    <button
-      key="content-4"
-      onClick={() =>
-        onOpen("https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1200")
-      }
-      className="h-[220px] w-[200px] overflow-hidden rounded-2xl sm:h-[240px] sm:w-[220px]"
-    >
-      <img
-        src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800"
-        alt="Content creation"
-        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
-      />
-    </button>,
+    <ImageCard
+      key="c1"
+      src="https://images.pexels.com/photos/1229862/pexels-photo-1229862.jpeg?auto=compress&cs=tinysrgb&w=800"
+      alt="Workspace"
+      onOpen={onOpen}
+    />,
+    <ImageCard
+      key="c2"
+      src="https://images.pexels.com/photos/35711550/pexels-photo-35711550.jpeg?auto=compress&cs=tinysrgb&w=800"
+      alt="Creative moment"
+      onOpen={onOpen}
+    />,
+    <ImageCard
+      key="c3"
+      src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800"
+      alt="Collaboration"
+      onOpen={onOpen}
+    />,
+    <ImageCard
+      key="c4"
+      src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800"
+      alt="Content creation"
+      onOpen={onOpen}
+    />,
   ];
 
   return (
-    <section id="content" className="border-b border-white/6">
-      <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-5 py-16 lg:grid-cols-12 lg:px-8 lg:py-20">
-        <div className="lg:col-span-7 overflow-hidden">
-          <Carousel autoPlay={4200}>{slides}</Carousel>
-        </div>
-
-        <Reveal className="lg:col-span-5 lg:pl-8">
-          <SectionLabel num="04" />
-          <h2 className="text-[28px] font-semibold tracking-tight text-white uppercase lg:text-[32px]">Content Creation</h2>
-          <p className="mt-2 text-[14px] text-white/45">Concepts / Campaigns / Creative Direction</p>
-          <p className="mt-4 max-w-[380px] text-[13.5px] leading-relaxed text-white/45">
-            I create content that informs, inspires and connects — from concepts to campaigns and creative direction.
-          </p>
-          <ViewLink onClick={() => onView("content")} />
-        </Reveal>
-      </div>
-    </section>
+    <SectionShell
+      id="content"
+      num="04"
+      title="Content Creation"
+      subtitle="Concepts  ·  Campaigns  ·  Direction"
+      description="I create content that informs, inspires and connects — from concepts to campaigns and creative direction."
+      onView={onView}
+      category="content"
+    >
+      <Carousel autoPlay={4200}>{slides}</Carousel>
+    </SectionShell>
   );
 }
