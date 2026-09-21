@@ -81,7 +81,7 @@ function SectionShell({
 
 export function UIUX({ onView, onOpen }: { onView: (c: Category) => void; onOpen: (src: string) => void }) {
   const slides = [
-    <ImageCard key="laptop" wide src="/images/ui-laptop.png" alt="Product dashboard" onOpen={onOpen} />,
+    <ImageCard key="laptop" wide src="/images/ui-laptop.png" alt="Accessories Website UI" onOpen={onOpen} />,
     <ImageCard
       key="ui1"
       src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800"
@@ -118,10 +118,10 @@ export function UIUX({ onView, onOpen }: { onView: (c: Category) => void; onOpen
 }
 
 const posters = [
-  { src: "/images/poster-good-things.png", title: "Good Things Take Time" },
-  { src: "/images/poster-create.png", title: "Create Something Bigger" },
-  { src: "/images/poster-dream.png", title: "Dream Plan Do" },
-  { src: "/images/poster-brand.png", title: "AT Brand System" },
+  { src: "/images/poster-good-things.png", title: "Poster & Banner Design" },
+  { src: "/images/poster-create.png", title: "Social Media Graphics" },
+  { src: "/images/poster-dream.png", title: "Brand Campaign" },
+  { src: "/images/poster-brand.png", title: "Brand Identity System" },
 ];
 
 export function Graphic({ onView, onOpen }: { onView: (c: Category) => void; onOpen: (src: string) => void }) {
