@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NAV, SERVICES, RESUME_TEXT } from "./data";
+import { NAV, RESUME_TEXT } from "./data";
 import { IconArrowRight, IconDownload, IconMail, IconPhone, IconPin, IconClose, IconMenu } from "./components/Icons";
 import { cn } from "./utils/cn";
 import { useContent } from "./hooks/useContent";
@@ -14,7 +14,7 @@ function downloadResume() {
   URL.revokeObjectURL(url);
 }
 
-function Navbar({ name, role }: { name: string; role: string }) {
+function Navbar({ name }: { name: string }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("home");
@@ -43,7 +43,7 @@ function Navbar({ name, role }: { name: string; role: string }) {
     <header className={cn("fixed top-0 right-0 left-0 z-50 transition-all duration-300", scrolled ? "border-b border-white/6 bg-[#06080f]/90 backdrop-blur-xl" : "bg-transparent")}>
       <div className="mx-auto flex h-[70px] max-w-[1200px] items-center justify-between px-5 lg:px-8">
         <button onClick={() => go("home")} className="flex items-center gap-2">
-          <span className="text-[15px] font-bold text-white"></> {name.split(" ")[0]}</span>
+          <span className="text-[15px] font-bold text-white">{`</>`} {name.split(" ")[0]}</span>
         </button>
 
         <nav className="hidden items-center gap-7 lg:flex">
@@ -102,9 +102,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#06080f] text-white">
-      <Navbar name={personal.fullName} role={personal.role} />
+      <Navbar name={personal.fullName} />
 
-      {/* ═══════ 1. HERO ═══════ */}
+      {/* 1. HERO */}
       <section id="home" className="relative overflow-hidden pt-[70px]">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute top-[-5%] right-[5%] h-[500px] w-[500px] rounded-full bg-[#3b82f6]/10 blur-[120px]" />
@@ -141,7 +141,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* ═══════ 2. STATS ═══════ */}
+      {/* 2. STATS */}
       <section className="border-y border-white/6 py-10">
         <div className="mx-auto grid max-w-[1200px] grid-cols-2 gap-6 px-5 sm:grid-cols-4 lg:px-8">
           {[
@@ -158,7 +158,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* ═══════ 3. ABOUT ═══════ */}
+      {/* 3. ABOUT */}
       <section id="about" className="py-20">
         <div className="mx-auto grid max-w-[1200px] gap-10 px-5 lg:grid-cols-2 lg:px-8">
           <div>
@@ -218,7 +218,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* ═══════ 4. PROJECTS ═══════ */}
+      {/* 4. PROJECTS */}
       <section id="work" className="border-t border-white/6 py-20">
         <div className="mx-auto max-w-[1200px] px-5 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
@@ -262,7 +262,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* ═══════ 5. SKILLS ═══════ */}
+      {/* 5. SKILLS */}
       <section id="skills" className="border-t border-white/6 py-20">
         <div className="mx-auto max-w-[1200px] px-5 lg:px-8">
           <p className="text-[12px] font-semibold tracking-[0.15em] text-[#60a5fa]">MY SKILLS</p>
@@ -284,7 +284,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* ═══════ 6. EXPERIENCE ═══════ */}
+      {/* 6. EXPERIENCE */}
       <section id="experience" className="border-t border-white/6 py-20">
         <div className="mx-auto grid max-w-[1200px] gap-10 px-5 lg:grid-cols-[1fr_340px] lg:px-8">
           <div>
@@ -314,7 +314,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* CTA Card */}
           <div className="rounded-2xl border border-white/8 bg-[#0c1018] p-7 text-center lg:self-start">
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#3b82f6]/15 text-[#60a5fa]">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
@@ -329,7 +328,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* ═══════ 7. CONTACT ═══════ */}
+      {/* 7. CONTACT */}
       <section id="contact" className="border-t border-white/6 py-20">
         <div className="mx-auto grid max-w-[1200px] gap-10 px-5 lg:grid-cols-2 lg:px-8">
           <div>
