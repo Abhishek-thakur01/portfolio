@@ -1,5 +1,5 @@
 import type { Category } from "../data";
-import { IdeasCard, SocialMockup } from "./Mockups";
+import { IdeasCard } from "./Mockups";
 import { Reveal, SectionLabel, ViewLink } from "./Reveal";
 import { IconPlay } from "./Icons";
 import { Carousel } from "./Carousel";
@@ -201,9 +201,6 @@ export function Content({ onView, onOpen }: { onView: (c: Category) => void; onO
   const slides = [
     <div key="ideas" className="h-[210px] w-[160px] sm:h-[230px] sm:w-[170px]">
       <IdeasCard />
-    </div>,
-    <div key="social" className="h-[210px] w-[160px] sm:h-[230px] sm:w-[170px]">
-      <SocialMockup />
     </div>,
     <button
       key="laptop"
