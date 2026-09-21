@@ -9,10 +9,9 @@ export function AboutSkills() {
         <Reveal className="lg:col-span-3">
           <SectionLabel num="05" />
           <h2 className="text-[28px] font-semibold tracking-tight text-white uppercase lg:text-[32px]">About Me</h2>
-          <p className="mt-2 text-[14px] text-white/45">Your story + approach</p>
+          <p className="mt-2 text-[14px] text-white/45">Graphic & UI Designer</p>
           <p className="mt-4 text-[13.5px] leading-relaxed text-white/45">
-            I'm Abhishek, a creative problem-solver with a passion for design, technology and storytelling. I love
-            turning ideas into meaningful digital experiences and visual content.
+            I'm a creative Graphic & UI Designer who turns ideas into impactful visuals. I specialize in branding, social media design, and UI, along with video editing, reel shooting, and short-form content creation. With experience in social media handling, I create content that's both visually engaging and strategically effective.
           </p>
           <ViewLink
             onClick={() => document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" })}
@@ -41,12 +40,11 @@ export function AboutSkills() {
         <Reveal delay={140} className="lg:col-span-4" >
           <div id="skills">
             <SectionLabel num="06" extra="Skills & Tools" />
-            <p className="text-[15px] text-white/70">Figma / Adobe / Premiere / etc.</p>
+            <p className="text-[15px] text-white/70">Canva / Figma / Adobe Suite</p>
             <p className="mt-4 text-[13.5px] leading-relaxed text-white/45">
-              I work with modern tools and technologies to bring ideas to life — from design and development to editing
-              and content creation.
+              Logo Design, Branding, Social Media Graphics, UI Mockups, Poster & Banner Design, Business Card Design, Video Editing, Reel Shooting & Editing, Short-Form Content Creation.
             </p>
-            <div className="mt-6 grid grid-cols-5 gap-2.5">
+            <div className="mt-6 grid grid-cols-3 gap-2.5 sm:grid-cols-3">
               {TOOLS.map((t) => (
                 <div key={t.id} className="group relative">
                   <div className="flex h-[52px] w-full items-center justify-center rounded-xl bg-[#121826] ring-1 ring-white/8 transition group-hover:-translate-y-0.5 group-hover:ring-white/20">
