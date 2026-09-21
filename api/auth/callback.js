@@ -9,11 +9,10 @@ export default async function handler(req, res) {
   const clientSecret = process.env.GITHUB_CLIENT_SECRET;
 
   if (!clientId || !clientSecret) {
-    return res.status(500).json({ error: "GitHub OAuth not configured" });
+    return res.status(500).json({ error: "GitHub OAuth not configured. Add GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET in Vercel." });
   }
 
   try {
-    // Exchange code for access token
     const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
       method: "POST",
       headers: {
@@ -33,9 +32,8 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: tokenData.error_description || tokenData.error });
     }
 
-    // Redirect back to admin with token
-    const redirectUrl = `/admin?token=${tokenData.access_token}`;
-    res.redirect(redirectUrl);
+    // Redirect to admin with token
+    res.redirect(`/admin?token=${tokenData.access_token}`);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Authentication failed" });
