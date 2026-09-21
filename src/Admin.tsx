@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+/* ───────────────── Types ───────────────── */
 interface SiteData {
   name: string;
   title: string;
@@ -7,32 +8,130 @@ interface SiteData {
   email: string;
   phone: string;
   location: string;
+  heroText: string;
 }
 
-const defaultData: SiteData = {
+interface Project {
+  id: string;
+  title: string;
+  category: string;
+  type: string;
+  image: string;
+  tags: string[];
+  description: string;
+}
+
+interface ExperienceItem {
+  years: string;
+  role: string;
+  place: string;
+  tags: string;
+}
+
+interface Service {
+  title: string;
+  desc: string;
+  icon: string;
+}
+
+/* ───────────────── Defaults ───────────────── */
+const defaultSite: SiteData = {
   name: "Abhishek Thakur",
   title: "Graphic & UI Designer",
-  about: "I'm a creative Graphic & UI Designer who turns ideas into impactful visuals.",
+  about:
+    "I'm a creative Graphic & UI Designer who turns ideas into impactful visuals. I specialize in branding, social media design, and UI, along with video editing, reel shooting, and short-form content creation.",
   email: "iabhishekbhardwaj07@gmail.com",
   phone: "+91 98827 00510",
   location: "Mandi, Himachal Pradesh",
+  heroText:
+    "I'm a creative Graphic & UI Designer who turns ideas into impactful visuals. I specialize in branding, social media design, UI, video editing and short-form content creation.",
 };
 
+const defaultProjects: Project[] = [
+  {
+    id: "p1",
+    title: "Accessories Website UI",
+    category: "uiux",
+    type: "UI Mockup",
+    image: "/images/ui-laptop.png",
+    tags: ["Figma", "Wireframe", "UI"],
+    description: "Created a basic wireframe and UI mockup of an Accessories Website using Figma.",
+  },
+  {
+    id: "p2",
+    title: "Social Media Campaign",
+    category: "content",
+    type: "Campaign",
+    image: "/images/content-impact.png",
+    tags: ["Canva", "Figma", "CapCut"],
+    description: "Designed Instagram and Facebook post templates, videos and gifs for real brands.",
+  },
+  {
+    id: "p3",
+    title: "Brand Identity",
+    category: "graphic",
+    type: "Branding",
+    image: "/images/poster-brand.png",
+    tags: ["Logo", "Stationery", "Illustrator"],
+    description: "Developed branding elements (logo, business card, letterhead) for companies.",
+  },
+  {
+    id: "p4",
+    title: "Poster & Banner Design",
+    category: "graphic",
+    type: "Graphic",
+    image: "/images/poster-good-things.png",
+    tags: ["Poster", "Banner", "Print"],
+    description: "High-impact posters and banners designed for brand campaigns.",
+  },
+];
+
+const defaultExperience: ExperienceItem[] = [
+  {
+    years: "2024 – Present",
+    role: "Graphic Designer, Social Media Content Creator & UI/UX Designer",
+    place: "Cuilsoft Pvt. Ltd.",
+    tags: "Branding / Social Media / UI-UX",
+  },
+  {
+    years: "2023 – 2024",
+    role: "Graphic Designing & UI/UX Intern",
+    place: "Pisoft Informatics Pvt. Ltd. (Mohali)",
+    tags: "6 Months Internship",
+  },
+];
+
+const defaultServices: Service[] = [
+  { title: "UI/UX Design", desc: "Clean, user-friendly designs that improve engagement and experience.", icon: "monitor" },
+  { title: "Graphic Design", desc: "Visual content that communicates ideas and builds brand identity.", icon: "pen" },
+  { title: "Video Editing", desc: "Engaging videos and reels that tell stories and connect with your audience.", icon: "play" },
+  { title: "Content Creation", desc: "Social media graphics, campaigns and strategically effective content.", icon: "content" },
+];
+
+const defaultTools = ["Figma", "Photoshop", "Illustrator", "Premiere Pro", "Canva", "CapCut", "HTML5", "CSS3"];
+
+/* ───────────────── Component ───────────────── */
 export default function Admin() {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<any>(null);
-  const [data, setData] = useState<SiteData>(defaultData);
+  const [tab, setTab] = useState<"site" | "projects" | "experience" | "services" | "skills">("site");
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
 
+  // Data states
+  const [site, setSite] = useState<SiteData>(defaultSite);
+  const [projects, setProjects] = useState<Project[]>(defaultProjects);
+  const [experience, setExperience] = useState<ExperienceItem[]>(defaultExperience);
+  const [services, setServices] = useState<Service[]>(defaultServices);
+  const [tools, setTools] = useState<string[]>(defaultTools);
+
+  // Auth
   useEffect(() => {
-    // Check URL for token from OAuth callback
     const params = new URLSearchParams(window.location.search);
     const urlToken = params.get("token");
     if (urlToken) {
       localStorage.setItem("gh_token", urlToken);
       setToken(urlToken);
-      // Clean URL
       window.history.replaceState({}, "", "/admin");
     } else {
       const saved = localStorage.getItem("gh_token");
@@ -42,8 +141,6 @@ export default function Admin() {
 
   useEffect(() => {
     if (!token) return;
-
-    // Fetch GitHub user
     fetch("https://api.github.com/user", {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -61,37 +158,32 @@ export default function Admin() {
       });
   }, [token]);
 
-  const login = () => {
-    window.location.href = "/api/auth/login";
-  };
-
+  const login = () => (window.location.href = "/api/auth/login");
   const logout = () => {
     localStorage.removeItem("gh_token");
     setToken(null);
     setUser(null);
   };
 
-  const saveContent = async () => {
-    if (!token) return;
-    setSaving(true);
-    setMessage("");
-
+  /* ───── GitHub save helper ───── */
+  const saveToGitHub = async (path: string, contentObj: any, commitMsg: string) => {
+    if (!token) return false;
     try {
-      // Get current file SHA
-      const fileRes = await fetch(
-        "https://api.github.com/repos/Abhishek-thakur01/portfolio/contents/src/content/site.json",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+      // get current sha
+      let sha: string | undefined;
+      const getRes = await fetch(
+        `https://api.github.com/repos/Abhishek-thakur01/portfolio/contents/${path}`,
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-      const fileData = await fileRes.json();
-      const sha = fileData.sha;
+      if (getRes.ok) {
+        const fileData = await getRes.json();
+        sha = fileData.sha;
+      }
 
-      // Update file
-      const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(contentObj, null, 2))));
 
-      const updateRes = await fetch(
-        "https://api.github.com/repos/Abhishek-thakur01/portfolio/contents/src/content/site.json",
+      const putRes = await fetch(
+        `https://api.github.com/repos/Abhishek-thakur01/portfolio/contents/${path}`,
         {
           method: "PUT",
           headers: {
@@ -99,7 +191,7 @@ export default function Admin() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            message: "Update site content via CMS",
+            message: commitMsg,
             content,
             sha,
             branch: "main",
@@ -107,25 +199,70 @@ export default function Admin() {
         }
       );
 
-      if (updateRes.ok) {
-        setMessage("✅ Saved successfully! Changes will appear after deploy.");
-      } else {
-        const err = await updateRes.json();
-        setMessage("❌ Error: " + (err.message || "Failed to save"));
-      }
-    } catch (err: any) {
-      setMessage("❌ Error: " + err.message);
+      return putRes.ok;
+    } catch {
+      return false;
     }
+  };
 
+  const handleSave = async () => {
+    setSaving(true);
+    setMessage("");
+
+    const results = await Promise.all([
+      saveToGitHub("src/content/site.json", site, "CMS: Update site settings"),
+      saveToGitHub("src/content/projects.json", projects, "CMS: Update projects"),
+      saveToGitHub("src/content/experience.json", experience, "CMS: Update experience"),
+      saveToGitHub("src/content/services.json", services, "CMS: Update services"),
+      saveToGitHub("src/content/tools.json", tools, "CMS: Update tools"),
+    ]);
+
+    if (results.every(Boolean)) {
+      setMessage("✅ All changes saved to GitHub! Site will update after deploy (~1 min).");
+    } else {
+      setMessage("⚠️ Some files failed to save. Check console / token permissions.");
+    }
     setSaving(false);
   };
 
+  /* ───── Project helpers ───── */
+  const addProject = () => {
+    setProjects([
+      ...projects,
+      {
+        id: "p" + Date.now(),
+        title: "New Project",
+        category: "uiux",
+        type: "Project",
+        image: "/images/ui-laptop.png",
+        tags: [],
+        description: "",
+      },
+    ]);
+  };
+
+  const removeProject = (id: string) => setProjects(projects.filter((p) => p.id !== id));
+
+  const updateProject = (id: string, field: keyof Project, value: any) => {
+    setProjects(projects.map((p) => (p.id === id ? { ...p, [field]: value } : p)));
+  };
+
+  /* ───── Experience helpers ───── */
+  const addExperience = () => {
+    setExperience([...experience, { years: "", role: "", place: "", tags: "" }]);
+  };
+  const removeExperience = (i: number) => setExperience(experience.filter((_, idx) => idx !== i));
+
+  /* ───── Login Screen ───── */
   if (!token || !user) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#06080f] px-4">
-        <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0c1018] p-8 text-center">
+        <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0c1018] p-8 text-center shadow-2xl">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#8b7cff] text-xl font-bold text-white">
+            AT
+          </div>
           <h1 className="text-2xl font-bold text-white">Portfolio CMS</h1>
-          <p className="mt-2 text-white/50">Login with your GitHub account to manage content</p>
+          <p className="mt-2 text-sm text-white/50">Login with GitHub to manage your entire portfolio</p>
           <button
             onClick={login}
             className="mt-8 flex w-full items-center justify-center gap-3 rounded-xl bg-white px-6 py-3.5 font-semibold text-black transition hover:bg-white/90"
@@ -140,95 +277,322 @@ export default function Admin() {
     );
   }
 
+  /* ───── Main CMS UI ───── */
+  const tabs = [
+    { id: "site", label: "Site Settings" },
+    { id: "projects", label: "Projects" },
+    { id: "experience", label: "Experience" },
+    { id: "services", label: "Services" },
+    { id: "skills", label: "Skills & Tools" },
+  ] as const;
+
   return (
     <div className="min-h-screen bg-[#06080f] text-white">
-      <header className="border-b border-white/10 bg-[#0c1018]">
-        <div className="mx-auto flex max-w-4xl items-center justify-between px-5 py-4">
-          <div>
-            <h1 className="text-lg font-bold">Portfolio CMS</h1>
-            <p className="text-sm text-white/50">Logged in as {user.login}</p>
+      {/* Header */}
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0c1018]/90 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#8b7cff] text-sm font-bold">AT</div>
+            <div>
+              <h1 className="text-base font-bold">Portfolio CMS</h1>
+              <p className="text-xs text-white/40">@{user.login}</p>
+            </div>
           </div>
-          <button onClick={logout} className="rounded-lg border border-white/20 px-4 py-2 text-sm hover:bg-white/5">
-            Logout
-          </button>
+          <div className="flex items-center gap-3">
+            <a href="/" target="_blank" className="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-white/70 hover:bg-white/5">
+              View Site ↗
+            </a>
+            <button onClick={logout} className="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-white/70 hover:bg-white/5">
+              Logout
+            </button>
+          </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-4xl px-5 py-10">
-        <div className="rounded-2xl border border-white/10 bg-[#0c1018] p-6">
-          <h2 className="text-xl font-semibold">Site Settings</h2>
-          <p className="mt-1 text-sm text-white/50">Edit your portfolio content. Changes are saved directly to GitHub.</p>
+      <div className="mx-auto flex max-w-6xl gap-8 px-5 py-8">
+        {/* Sidebar */}
+        <aside className="hidden w-52 shrink-0 md:block">
+          <nav className="sticky top-24 space-y-1">
+            {tabs.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                className={`w-full rounded-xl px-4 py-2.5 text-left text-sm font-medium transition ${
+                  tab === t.id ? "bg-[#8b7cff] text-white" : "text-white/60 hover:bg-white/5 hover:text-white"
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </nav>
+        </aside>
 
-          <div className="mt-8 space-y-5">
-            <div>
-              <label className="mb-1.5 block text-sm text-white/60">Name</label>
-              <input
-                value={data.name}
-                onChange={(e) => setData({ ...data, name: e.target.value })}
-                className="w-full rounded-xl border border-white/10 bg-[#06080f] px-4 py-3 text-white outline-none focus:border-[#8b7cff]"
-              />
-            </div>
-            <div>
-              <label className="mb-1.5 block text-sm text-white/60">Title</label>
-              <input
-                value={data.title}
-                onChange={(e) => setData({ ...data, title: e.target.value })}
-                className="w-full rounded-xl border border-white/10 bg-[#06080f] px-4 py-3 text-white outline-none focus:border-[#8b7cff]"
-              />
-            </div>
-            <div>
-              <label className="mb-1.5 block text-sm text-white/60">About</label>
-              <textarea
-                value={data.about}
-                onChange={(e) => setData({ ...data, about: e.target.value })}
-                rows={4}
-                className="w-full rounded-xl border border-white/10 bg-[#06080f] px-4 py-3 text-white outline-none focus:border-[#8b7cff]"
-              />
-            </div>
-            <div className="grid gap-5 sm:grid-cols-2">
-              <div>
-                <label className="mb-1.5 block text-sm text-white/60">Email</label>
-                <input
-                  value={data.email}
-                  onChange={(e) => setData({ ...data, email: e.target.value })}
-                  className="w-full rounded-xl border border-white/10 bg-[#06080f] px-4 py-3 text-white outline-none focus:border-[#8b7cff]"
-                />
-              </div>
-              <div>
-                <label className="mb-1.5 block text-sm text-white/60">Phone</label>
-                <input
-                  value={data.phone}
-                  onChange={(e) => setData({ ...data, phone: e.target.value })}
-                  className="w-full rounded-xl border border-white/10 bg-[#06080f] px-4 py-3 text-white outline-none focus:border-[#8b7cff]"
-                />
-              </div>
-            </div>
-            <div>
-              <label className="mb-1.5 block text-sm text-white/60">Location</label>
-              <input
-                value={data.location}
-                onChange={(e) => setData({ ...data, location: e.target.value })}
-                className="w-full rounded-xl border border-white/10 bg-[#06080f] px-4 py-3 text-white outline-none focus:border-[#8b7cff]"
-              />
-            </div>
-          </div>
-
-          <div className="mt-8 flex items-center gap-4">
+        {/* Mobile tabs */}
+        <div className="mb-4 flex gap-2 overflow-x-auto md:hidden">
+          {tabs.map((t) => (
             <button
-              onClick={saveContent}
-              disabled={saving}
-              className="rounded-xl bg-[#8b7cff] px-6 py-3 font-semibold text-white transition hover:bg-[#7a6bef] disabled:opacity-60"
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-medium ${
+                tab === t.id ? "bg-[#8b7cff] text-white" : "border border-white/15 text-white/60"
+              }`}
             >
-              {saving ? "Saving..." : "Save Changes"}
+              {t.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Content */}
+        <main className="min-w-0 flex-1">
+          {/* ── SITE SETTINGS ── */}
+          {tab === "site" && (
+            <div className="space-y-5 rounded-2xl border border-white/10 bg-[#0c1018] p-6">
+              <h2 className="text-lg font-semibold">Site Settings</h2>
+              {(["name", "title", "email", "phone", "location"] as const).map((key) => (
+                <div key={key}>
+                  <label className="mb-1.5 block text-xs capitalize text-white/50">{key}</label>
+                  <input
+                    value={site[key]}
+                    onChange={(e) => setSite({ ...site, [key]: e.target.value })}
+                    className="w-full rounded-xl border border-white/10 bg-[#06080f] px-4 py-2.5 text-sm outline-none focus:border-[#8b7cff]"
+                  />
+                </div>
+              ))}
+              <div>
+                <label className="mb-1.5 block text-xs text-white/50">Hero Text</label>
+                <textarea
+                  value={site.heroText}
+                  onChange={(e) => setSite({ ...site, heroText: e.target.value })}
+                  rows={3}
+                  className="w-full rounded-xl border border-white/10 bg-[#06080f] px-4 py-2.5 text-sm outline-none focus:border-[#8b7cff]"
+                />
+              </div>
+              <div>
+                <label className="mb-1.5 block text-xs text-white/50">About</label>
+                <textarea
+                  value={site.about}
+                  onChange={(e) => setSite({ ...site, about: e.target.value })}
+                  rows={4}
+                  className="w-full rounded-xl border border-white/10 bg-[#06080f] px-4 py-2.5 text-sm outline-none focus:border-[#8b7cff]"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* ── PROJECTS ── */}
+          {tab === "projects" && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold">Projects ({projects.length})</h2>
+                <button onClick={addProject} className="rounded-lg bg-[#8b7cff] px-4 py-2 text-sm font-medium hover:bg-[#7a6bef]">
+                  + Add Project
+                </button>
+              </div>
+              {projects.map((p) => (
+                <div key={p.id} className="rounded-2xl border border-white/10 bg-[#0c1018] p-5">
+                  <div className="mb-4 flex items-start justify-between">
+                    <input
+                      value={p.title}
+                      onChange={(e) => updateProject(p.id, "title", e.target.value)}
+                      className="w-full bg-transparent text-base font-semibold outline-none"
+                      placeholder="Project title"
+                    />
+                    <button onClick={() => removeProject(p.id)} className="ml-3 text-xs text-red-400 hover:text-red-300">
+                      Delete
+                    </button>
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div>
+                      <label className="mb-1 block text-xs text-white/40">Category</label>
+                      <select
+                        value={p.category}
+                        onChange={(e) => updateProject(p.id, "category", e.target.value)}
+                        className="w-full rounded-lg border border-white/10 bg-[#06080f] px-3 py-2 text-sm"
+                      >
+                        <option value="uiux">UI/UX</option>
+                        <option value="graphic">Graphic</option>
+                        <option value="video">Video</option>
+                        <option value="content">Content</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="mb-1 block text-xs text-white/40">Type</label>
+                      <input
+                        value={p.type}
+                        onChange={(e) => updateProject(p.id, "type", e.target.value)}
+                        className="w-full rounded-lg border border-white/10 bg-[#06080f] px-3 py-2 text-sm"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="mb-1 block text-xs text-white/40">Image URL</label>
+                      <input
+                        value={p.image}
+                        onChange={(e) => updateProject(p.id, "image", e.target.value)}
+                        className="w-full rounded-lg border border-white/10 bg-[#06080f] px-3 py-2 text-sm"
+                        placeholder="/images/your-image.png"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="mb-1 block text-xs text-white/40">Tags (comma separated)</label>
+                      <input
+                        value={p.tags.join(", ")}
+                        onChange={(e) =>
+                          updateProject(
+                            p.id,
+                            "tags",
+                            e.target.value.split(",").map((t) => t.trim()).filter(Boolean)
+                          )
+                        }
+                        className="w-full rounded-lg border border-white/10 bg-[#06080f] px-3 py-2 text-sm"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="mb-1 block text-xs text-white/40">Description</label>
+                      <textarea
+                        value={p.description}
+                        onChange={(e) => updateProject(p.id, "description", e.target.value)}
+                        rows={2}
+                        className="w-full rounded-lg border border-white/10 bg-[#06080f] px-3 py-2 text-sm"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* ── EXPERIENCE ── */}
+          {tab === "experience" && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold">Experience</h2>
+                <button onClick={addExperience} className="rounded-lg bg-[#8b7cff] px-4 py-2 text-sm font-medium hover:bg-[#7a6bef]">
+                  + Add
+                </button>
+              </div>
+              {experience.map((exp, i) => (
+                <div key={i} className="rounded-2xl border border-white/10 bg-[#0c1018] p-5">
+                  <div className="mb-3 flex justify-end">
+                    <button onClick={() => removeExperience(i)} className="text-xs text-red-400">Delete</button>
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <input
+                      value={exp.years}
+                      onChange={(e) => {
+                        const next = [...experience];
+                        next[i] = { ...next[i], years: e.target.value };
+                        setExperience(next);
+                      }}
+                      placeholder="Years (e.g. 2024 – Present)"
+                      className="rounded-lg border border-white/10 bg-[#06080f] px-3 py-2 text-sm"
+                    />
+                    <input
+                      value={exp.place}
+                      onChange={(e) => {
+                        const next = [...experience];
+                        next[i] = { ...next[i], place: e.target.value };
+                        setExperience(next);
+                      }}
+                      placeholder="Company"
+                      className="rounded-lg border border-white/10 bg-[#06080f] px-3 py-2 text-sm"
+                    />
+                    <input
+                      value={exp.role}
+                      onChange={(e) => {
+                        const next = [...experience];
+                        next[i] = { ...next[i], role: e.target.value };
+                        setExperience(next);
+                      }}
+                      placeholder="Role"
+                      className="sm:col-span-2 rounded-lg border border-white/10 bg-[#06080f] px-3 py-2 text-sm"
+                    />
+                    <input
+                      value={exp.tags}
+                      onChange={(e) => {
+                        const next = [...experience];
+                        next[i] = { ...next[i], tags: e.target.value };
+                        setExperience(next);
+                      }}
+                      placeholder="Tags"
+                      className="sm:col-span-2 rounded-lg border border-white/10 bg-[#06080f] px-3 py-2 text-sm"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* ── SERVICES ── */}
+          {tab === "services" && (
+            <div className="space-y-4">
+              <h2 className="text-lg font-semibold">Services</h2>
+              {services.map((s, i) => (
+                <div key={i} className="rounded-2xl border border-white/10 bg-[#0c1018] p-5">
+                  <input
+                    value={s.title}
+                    onChange={(e) => {
+                      const next = [...services];
+                      next[i] = { ...next[i], title: e.target.value };
+                      setServices(next);
+                    }}
+                    className="mb-2 w-full bg-transparent text-base font-semibold outline-none"
+                  />
+                  <textarea
+                    value={s.desc}
+                    onChange={(e) => {
+                      const next = [...services];
+                      next[i] = { ...next[i], desc: e.target.value };
+                      setServices(next);
+                    }}
+                    rows={2}
+                    className="w-full rounded-lg border border-white/10 bg-[#06080f] px-3 py-2 text-sm"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* ── SKILLS ── */}
+          {tab === "skills" && (
+            <div className="rounded-2xl border border-white/10 bg-[#0c1018] p-6">
+              <h2 className="mb-4 text-lg font-semibold">Skills & Tools</h2>
+              <p className="mb-3 text-xs text-white/40">Comma separated list</p>
+              <textarea
+                value={tools.join(", ")}
+                onChange={(e) =>
+                  setTools(
+                    e.target.value
+                      .split(",")
+                      .map((t) => t.trim())
+                      .filter(Boolean)
+                  )
+                }
+                rows={4}
+                className="w-full rounded-xl border border-white/10 bg-[#06080f] px-4 py-3 text-sm outline-none focus:border-[#8b7cff]"
+              />
+              <div className="mt-4 flex flex-wrap gap-2">
+                {tools.map((t) => (
+                  <span key={t} className="rounded-full bg-white/10 px-3 py-1 text-xs">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Save Bar */}
+          <div className="sticky bottom-6 mt-8 flex items-center gap-4 rounded-2xl border border-white/10 bg-[#0c1018]/95 p-4 backdrop-blur-xl">
+            <button
+              onClick={handleSave}
+              disabled={saving}
+              className="rounded-xl bg-[#8b7cff] px-6 py-3 text-sm font-semibold transition hover:bg-[#7a6bef] disabled:opacity-60"
+            >
+              {saving ? "Saving..." : "Save All Changes"}
             </button>
             {message && <p className="text-sm">{message}</p>}
           </div>
-        </div>
-
-        <p className="mt-6 text-center text-sm text-white/40">
-          <a href="/" className="hover:text-white">← Back to Portfolio</a>
-        </p>
-      </main>
+        </main>
+      </div>
     </div>
   );
 }
