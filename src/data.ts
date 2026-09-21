@@ -11,12 +11,11 @@ export type Project = {
 
 export const NAV = [
   { id: "home", label: "Home" },
-  { id: "uiux", label: "UI/UX Design" },
-  { id: "graphic", label: "Graphic Design" },
+  { id: "uiux", label: "UI/UX" },
+  { id: "graphic", label: "Graphic" },
   { id: "video", label: "Video" },
-  { id: "content", label: "Content Creation" },
+  { id: "content", label: "Content" },
   { id: "about", label: "About" },
-  { id: "skills", label: "Skills" },
   { id: "experience", label: "Experience" },
   { id: "contact", label: "Contact" },
 ];
@@ -24,144 +23,66 @@ export const NAV = [
 export const PROJECTS: Project[] = [
   {
     id: "p1",
-    title: "Build Better Products",
+    title: "Accessories Website UI",
     category: "uiux",
-    tags: ["SaaS", "Dashboard", "Product"],
+    tags: ["Figma", "Wireframe", "UI Mockup"],
     image: "/images/ui-laptop.png",
-    description: "A product analytics dashboard designed for clarity — charts, flows and a mobile companion app.",
+    description: "Created a basic wireframe and UI mockup of an Accessories Website using Figma.",
   },
   {
     id: "p2",
-    title: "AT Mobile Finance",
-    category: "uiux",
-    tags: ["App", "Fintech", "Mobile"],
-    image: "https://images.pexels.com/photos/7948065/pexels-photo-7948065.jpeg?auto=compress&cs=tinysrgb&w=900",
-    description: "A dark-mode finance app with spending insights, budgets and a calm, focused interface.",
+    title: "Social Media Campaign",
+    category: "content",
+    tags: ["Canva", "Figma", "CapCut"],
+    image: "/images/content-impact.png",
+    description: "Designed Instagram and Facebook post templates, videos and gifs for real brands using Canva, Figma, Illustrator and CapCut.",
   },
   {
     id: "p3",
-    title: "Analytics OS",
-    category: "uiux",
-    tags: ["Web", "Charts", "UX"],
-    image: "https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=900",
-    description: "An internal analytics system with modular widgets, live graphs and role-based views.",
+    title: "Brand Identity System",
+    category: "graphic",
+    tags: ["Logo", "Stationery", "Illustrator"],
+    image: "/images/poster-brand.png",
+    description: "Developed branding elements (logo, business card, letterhead) for companies using Figma and Illustrator.",
   },
   {
     id: "p4",
-    title: "Wander — Travel Journal",
-    category: "uiux",
-    tags: ["Website", "Travel", "UI"],
-    image: "https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=900",
-    description: "A light, editorial travel website with cinematic photography and a simple booking flow.",
+    title: "Poster & Banner Design",
+    category: "graphic",
+    tags: ["Poster", "Banner", "Print"],
+    image: "/images/poster-good-things.png",
+    description: "High-impact posters and banners designed for brand campaigns and social promotions.",
   },
   {
     id: "p5",
-    title: "Good Things Take Time",
-    category: "graphic",
-    tags: ["Poster", "Typography"],
-    image: "/images/poster-good-things.png",
-    description: "A high-contrast typographic poster exploring patience, craft and the long game.",
+    title: "Reel & Short-Form Content",
+    category: "video",
+    tags: ["Reels", "Shooting", "Editing"],
+    image: "/images/video-camera.png",
+    description: "Reel shooting and short-form content creation with editing in CapCut and Premiere Pro.",
   },
   {
     id: "p6",
-    title: "Create Something Bigger",
-    category: "graphic",
-    tags: ["Campaign", "Print"],
+    title: "Social Media Graphics",
+    category: "content",
+    tags: ["Instagram", "Facebook", "Canva"],
     image: "/images/poster-create.png",
-    description: "A bold red campaign visual for a brand launch — energy, scale and ambition.",
-  },
-  {
-    id: "p7",
-    title: "Dream Plan Do",
-    category: "graphic",
-    tags: ["Poster", "Landscape"],
-    image: "/images/poster-dream.png",
-    description: "Cinematic landscape poster pairing a simple mantra with mountain photography.",
-  },
-  {
-    id: "p8",
-    title: "AT Brand System",
-    category: "graphic",
-    tags: ["Identity", "Stationery"],
-    image: "/images/poster-brand.png",
-    description: "Personal brand identity — monogram, cards and dark stationery for AT.",
-  },
-  {
-    id: "p9",
-    title: "Studio Session",
-    category: "video",
-    tags: ["Shooting", "Cinema"],
-    image: "/images/video-camera.png",
-    description: "A controlled studio shoot with cinema cameras, motivated lighting and a tight crew.",
-  },
-  {
-    id: "p10",
-    title: "Golden Hour Reels",
-    category: "video",
-    tags: ["Reels", "Outdoor"],
-    image: "https://images.pexels.com/photos/2315049/pexels-photo-2315049.jpeg?auto=compress&cs=tinysrgb&w=900",
-    description: "Short-form films shot at sunset — silhouettes, handheld movement and natural sound.",
-  },
-  {
-    id: "p11",
-    title: "Edit Bay",
-    category: "video",
-    tags: ["Editing", "Color"],
-    image: "https://images.pexels.com/photos/8102677/pexels-photo-8102677.jpeg?auto=compress&cs=tinysrgb&w=900",
-    description: "Color, cut and sound design for a brand film — paced for emotion, not just information.",
-  },
-  {
-    id: "p12",
-    title: "Ideas Turn Into Impact",
-    category: "content",
-    tags: ["Campaign", "Direction"],
-    image: "/images/content-impact.png",
-    description: "A content platform idea — from concept lines to a full campaign narrative.",
-  },
-  {
-    id: "p13",
-    title: "Social Series",
-    category: "content",
-    tags: ["Social", "Copy"],
-    image: "https://images.pexels.com/photos/15226551/pexels-photo-15226551.jpeg?auto=compress&cs=tinysrgb&w=900",
-    description: "A weekly social series mixing product stills, carousels and founder notes.",
-  },
-  {
-    id: "p14",
-    title: "Desk Stories",
-    category: "content",
-    tags: ["Lifestyle", "Photo"],
-    image: "https://images.pexels.com/photos/1229862/pexels-photo-1229862.jpeg?auto=compress&cs=tinysrgb&w=900",
-    description: "Quiet desk photography and captions that make process feel like a story.",
-  },
-  {
-    id: "p15",
-    title: "Into the Range",
-    category: "content",
-    tags: ["Photo", "Narrative"],
-    image: "https://images.pexels.com/photos/35711550/pexels-photo-35711550.jpeg?auto=compress&cs=tinysrgb&w=900",
-    description: "A travel narrative built around one figure against a mountain horizon.",
+    description: "Consistent social media graphics and templates that drive engagement and brand recall.",
   },
 ];
 
 export const TIMELINE = [
   {
-    years: "2021 – 2022",
-    role: "Creative Designer",
-    place: "XYZ Agency",
-    tags: "Branding / Social / Web",
+    years: "2024 – Present",
+    role: "Graphic Designer, Social Media Content Creator & UI/UX Designer",
+    place: "Cuilsoft Pvt. Ltd.",
+    tags: "Branding / Social Media / UI-UX",
   },
   {
-    years: "2022 – 2023",
-    role: "Frontend Developer",
-    place: "Freelance",
-    tags: "React / Tailwind / Web Apps",
-  },
-  {
-    years: "2023 – Present",
-    role: "Creative Director",
-    place: "Self Employed",
-    tags: "Design / Video / Content",
+    years: "2023 – 2024",
+    role: "Graphic Designing & UI/UX Intern",
+    place: "Pisoft Informatics Pvt. Ltd. (Mohali)",
+    tags: "6 Months Internship · Graphic Design · UI/UX",
   },
 ];
 
@@ -170,11 +91,8 @@ export const TOOLS = [
   { id: "ps", name: "Photoshop" },
   { id: "ai", name: "Illustrator" },
   { id: "pr", name: "Premiere Pro" },
-  { id: "ae", name: "After Effects" },
-  { id: "vscode", name: "VS Code" },
+  { id: "canva", name: "Canva" },
   { id: "capcut", name: "CapCut" },
-  { id: "notion", name: "Notion" },
-  { id: "framer", name: "Framer" },
 ] as const;
 
 export const CATEGORY_META: Record<
@@ -183,45 +101,53 @@ export const CATEGORY_META: Record<
 > = {
   uiux: {
     title: "UI/UX Design",
-    blurb: "Websites, apps and product interfaces designed for simplicity and impact.",
+    blurb: "Clean, user-friendly interfaces and mockups that improve engagement and experience.",
   },
   graphic: {
     title: "Graphic Design",
-    blurb: "Posters, social and campaigns that leave a lasting impression.",
+    blurb: "Logos, branding, posters and visual identity that communicate ideas and build brand strength.",
   },
   video: {
-    title: "Video",
-    blurb: "Reels, shooting and editing that tell stories and grab attention.",
+    title: "Video Editing",
+    blurb: "Reels, short-form videos and edits that tell stories and connect with audiences.",
   },
   content: {
     title: "Content Creation",
-    blurb: "Concepts, campaigns and creative direction from idea to impact.",
+    blurb: "Social media graphics, campaigns and strategically effective content.",
   },
 };
 
 export const RESUME_TEXT = `ABHISHEK THAKUR
-Creative Designer & Content Creator
+Graphic / UI & UX Designer
 
-Email: abhishek@gmail.com
-Phone: +91 98765 43210
-Location: India
+Email: iabhishekbhardwaj07@gmail.com
+Phone: +91 98827 00510
+Location: Mandi (175001), Himachal Pradesh
 
-PROFILE
-Creative designer and content creator focused on building modern websites,
-eye-catching visuals and engaging content that connect with people.
+ABOUT
+I'm a creative Graphic & UI Designer who turns ideas into impactful visuals. I specialize in branding, social media design, and UI, along with video editing, reel shooting, and short-form content creation. With experience in social media handling, I create content that's both visually engaging and strategically effective.
+
+EDUCATION
+• Masters in Computer Applications (2025)
+  Himachal Pradesh Technical University, Hamirpur
+
+• Bachelors in Computer Applications (2023)
+  Vallabh Govt. College, Mandi
 
 EXPERIENCE
-2023 – Present  | Creative Director — Self Employed
-Design / Video / Content
+2024 – Present  | Graphic Designer, Social Media Content Creator & UI/UX Designer
+Cuilsoft Pvt. Ltd.
 
-2022 – 2023     | Frontend Developer — Freelance
-React / Tailwind / Web Apps
-
-2021 – 2022     | Creative Designer — XYZ Agency
-Branding / Social / Web
+2023 – 2024     | Graphic Designing & UI/UX Intern (6 months)
+Pisoft Informatics Pvt. Ltd. (Mohali)
 
 SKILLS
-UI/UX Design · Graphic Design · Video Production · Content Direction
-Figma · Adobe Photoshop · Illustrator · Premiere Pro · After Effects
-VS Code · CapCut · Notion · Framer
+Design: Logo Design, Branding, Social Media Graphics, UI Mockups, Poster & Banner Design, Business Card Design, Video Editing, Reel Shooting & Editing, Short-Form Content Creation, Social Media Content Creation
+Soft: Creativity, Attention to Detail, Time Management, Communication, Adaptability
+Tools: Canva, Figma, Adobe Illustrator, Adobe Photoshop, Adobe Premiere Pro, CapCut
+
+PROJECTS
+• Social Media Campaign Mockups – Instagram & Facebook templates, videos & gifs for real brands (Canva, Figma, Illustrator, CapCut)
+• Website UI Design – Wireframe and UI mockup of an Accessories Website (Figma)
+• Branding – Logo, business card, letterhead for companies (Figma, Illustrator)
 `;
