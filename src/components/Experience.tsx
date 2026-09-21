@@ -8,10 +8,9 @@ export function Experience({ onOpenTimeline, onOpen }: { onOpenTimeline: () => v
         <Reveal className="lg:col-span-3">
           <SectionLabel num="07" />
           <h2 className="text-[28px] font-semibold tracking-tight text-white uppercase lg:text-[32px]">Experience</h2>
-          <p className="mt-2 text-[14px] text-white/45">Companies / Projects / Timeline</p>
+          <p className="mt-2 text-[14px] text-white/45">Internship / Current Role</p>
           <p className="mt-4 text-[13.5px] leading-relaxed text-white/45">
-            From agency work to freelance projects, I've worked on a variety of creative and digital projects that helped
-            me grow and evolve.
+            Currently working as a Graphic Designer, Social Media Content Creator and UI/UX Designer. Previously completed a 6-month internship focused on graphic design and UI/UX.
           </p>
           <ViewLink onClick={onOpenTimeline}>View Timeline</ViewLink>
         </Reveal>
@@ -24,7 +23,7 @@ export function Experience({ onOpenTimeline, onOpen }: { onOpenTimeline: () => v
                 <div key={t.years} className="relative">
                   <span
                     className={`absolute top-1.5 -left-[17px] h-[9px] w-[9px] rounded-full ${
-                      i === TIMELINE.length - 1 ? "bg-[#8b7cff] ring-4 ring-[#8b7cff]/20" : "bg-white/30"
+                      i === 0 ? "bg-[#8b7cff] ring-4 ring-[#8b7cff]/20" : "bg-white/30"
                     }`}
                   />
                   <p className="text-[11px] tracking-wide text-white/40">{t.years}</p>
