@@ -1,8 +1,7 @@
 export const NAV = [
   { id: "home", label: "Home" },
   { id: "about", label: "About" },
-  { id: "services", label: "Services" },
-  { id: "work", label: "Work" },
+  { id: "work", label: "Projects" },
   { id: "skills", label: "Skills" },
   { id: "experience", label: "Experience" },
   { id: "contact", label: "Contact" },
@@ -29,52 +28,6 @@ export const SERVICES = [
     desc: "Social media graphics, campaigns and strategically effective content.",
     icon: "content",
   },
-];
-
-export const PROJECTS = [
-  {
-    id: "p1",
-    title: "Accessories Website UI",
-    category: "uiux",
-    tags: ["Figma", "Wireframe", "UI"],
-    image: "/images/ui-laptop.png",
-    type: "UI Mockup",
-  },
-  {
-    id: "p2",
-    title: "Social Media Campaign",
-    category: "content",
-    tags: ["Canva", "Figma", "CapCut"],
-    image: "/images/content-impact.png",
-    type: "Campaign",
-  },
-  {
-    id: "p3",
-    title: "Brand Identity",
-    category: "graphic",
-    tags: ["Logo", "Stationery", "Illustrator"],
-    image: "/images/poster-brand.png",
-    type: "Branding",
-  },
-  {
-    id: "p4",
-    title: "Poster & Banner Design",
-    category: "graphic",
-    tags: ["Poster", "Banner", "Print"],
-    image: "/images/poster-good-things.png",
-    type: "Graphic",
-  },
-];
-
-export const TOOLS = [
-  { name: "Figma", abbr: "Fg" },
-  { name: "Photoshop", abbr: "Ps" },
-  { name: "Illustrator", abbr: "Ai" },
-  { name: "Premiere Pro", abbr: "Pr" },
-  { name: "Canva", abbr: "Ca" },
-  { name: "CapCut", abbr: "Cc" },
-  { name: "HTML5", abbr: "H5" },
-  { name: "CSS3", abbr: "C3" },
 ];
 
 export const RESUME_TEXT = `ABHISHEK THAKUR
