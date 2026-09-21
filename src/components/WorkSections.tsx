@@ -1,5 +1,5 @@
 import type { Category } from "../data";
-import { IdeasCard, PhoneMockup, SocialMockup } from "./Mockups";
+import { IdeasCard, SocialMockup } from "./Mockups";
 import { Reveal, SectionLabel, ViewLink } from "./Reveal";
 import { IconPlay } from "./Icons";
 import { Carousel } from "./Carousel";
@@ -17,9 +17,6 @@ export function UIUX({ onView, onOpen }: { onView: (c: Category) => void; onOpen
         className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
       />
     </button>,
-    <div key="phone" className="h-[210px] w-[140px] md:h-[250px] md:w-[150px]">
-      <PhoneMockup />
-    </div>,
     <button
       key="ui-1"
       onClick={() => onOpen("https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=1200")}
