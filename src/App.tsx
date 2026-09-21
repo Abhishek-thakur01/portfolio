@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NAV, SERVICES, RESUME_TEXT } from "./data";
+import { NAV, RESUME_TEXT } from "./data";
 import { IconArrowRight, IconDownload, IconMail, IconPhone, IconPin, IconClose, IconMenu } from "./components/Icons";
 import { cn } from "./utils/cn";
 import { useContent } from "./hooks/useContent";
@@ -96,7 +96,14 @@ export default function App() {
   }
 
   const filters = ["all", "uiux", "graphic", "video", "content"];
-  const filtered = filter === "all" ? projects : projects.filter((p) => p.category.toLowerCase().includes(filter) || p.category.toLowerCase() === filter);
+  const filtered =
+    filter === "all"
+      ? projects
+      : projects.filter(
+          (p) =>
+            p.category.toLowerCase().includes(filter) ||
+            p.category.toLowerCase() === filter
+        );
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,7 +122,9 @@ export default function App() {
         </div>
         <div className="relative mx-auto grid max-w-[1280px] items-center gap-10 px-5 pt-12 pb-20 lg:grid-cols-2 lg:px-8 lg:pt-16">
           <div className="max-w-[580px]">
-            <p className="mb-4 text-[12px] font-semibold tracking-[0.2em] text-[#9aa3d6]">{personal.greeting.toUpperCase()} {personal.fullName.split(" ")[0].toUpperCase()}</p>
+            <p className="mb-4 text-[12px] font-semibold tracking-[0.2em] text-[#9aa3d6]">
+              {personal.greeting.toUpperCase()} {personal.fullName.split(" ")[0].toUpperCase()}
+            </p>
             <h1 className="text-[40px] leading-[1.1] font-bold tracking-tight text-white sm:text-[52px] lg:text-[56px]">
               I create digital<br />
               <span className="text-[#8b7cff]">experiences, brands</span><br />
@@ -144,7 +153,12 @@ export default function App() {
               <p className="font-hand text-[30px] leading-[1.05] font-semibold text-[#c4b5fd] lg:text-[36px]">Better<br />Ideas<br />Better<br />Products</p>
             </div>
             <div className="absolute inset-0 rounded-full bg-[#8b7cff]/20 blur-[80px]" />
-            <img src={personal.heroImage || "/images/hero-portrait.png"} alt={personal.fullName} className="relative z-10 h-full w-full object-cover object-top" style={{ maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)" }} />
+            <img
+              src={personal.heroImage || "/images/hero-portrait.png"}
+              alt={personal.fullName}
+              className="relative z-10 h-full w-full object-cover object-top"
+              style={{ maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)" }}
+            />
           </div>
         </div>
       </section>
@@ -173,7 +187,11 @@ export default function App() {
             <p className="text-[12px] font-semibold tracking-[0.2em] text-[#8b7cff]">ABOUT ME</p>
             <h2 className="mt-2 text-[28px] font-bold text-white">{about.heading || "About Me"}</h2>
             <div className="mt-6 flex items-start gap-4">
-              <img src={personal.heroImage || "/images/about-portrait.png"} alt={personal.fullName}} className="h-20 w-20 rounded-full object-cover" />
+              <img
+                src={personal.heroImage || "/images/about-portrait.png"}
+                alt={personal.fullName}
+                className="h-20 w-20 rounded-full object-cover"
+              />
               <div>
                 <p className="text-[15px] font-semibold text-white">{personal.fullName}</p>
                 <p className="text-[13px] text-white/50">Location: {personal.location}</p>
@@ -229,7 +247,14 @@ export default function App() {
             <h2 className="text-[32px] font-bold text-white sm:text-[40px]">Selected Projects</h2>
             <div className="flex flex-wrap gap-2">
               {filters.map((f) => (
-                <button key={f} onClick={() => setFilter(f)} className={cn("rounded-full px-4 py-1.5 text-[12px] font-medium capitalize transition", filter === f ? "bg-[#8b7cff] text-white" : "border border-white/15 text-white/60 hover:border-white/30 hover:text-white")}>
+                <button
+                  key={f}
+                  onClick={() => setFilter(f)}
+                  className={cn(
+                    "rounded-full px-4 py-1.5 text-[12px] font-medium capitalize transition",
+                    filter === f ? "bg-[#8b7cff] text-white" : "border border-white/15 text-white/60 hover:border-white/30 hover:text-white"
+                  )}
+                >
                   {f === "all" ? "All" : f === "uiux" ? "UI/UX" : f}
                 </button>
               ))}
