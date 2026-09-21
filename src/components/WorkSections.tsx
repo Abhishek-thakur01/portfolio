@@ -2,8 +2,51 @@ import type { Category } from "../data";
 import { DashboardMockup, IdeasCard, PhoneMockup, SocialMockup, WebsiteMockup } from "./Mockups";
 import { Reveal, SectionLabel, ViewLink } from "./Reveal";
 import { IconPlay } from "./Icons";
+import { Carousel } from "./Carousel";
 
 export function UIUX({ onView, onOpen }: { onView: (c: Category) => void; onOpen: (src: string) => void }) {
+  const items = [
+    {
+      key: "laptop",
+      node: (
+        <button
+          onClick={() => onOpen("/images/ui-laptop.png")}
+          className="h-[210px] w-[280px] overflow-hidden rounded-2xl md:h-[250px] md:w-[320px]"
+        >
+          <img
+            src="/images/ui-laptop.png"
+            alt="Product dashboard on laptop"
+            className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
+          />
+        </button>
+      ),
+    },
+    {
+      key: "phone",
+      node: (
+        <div className="h-[210px] w-[140px] md:h-[250px] md:w-[150px]">
+          <PhoneMockup />
+        </div>
+      ),
+    },
+    {
+      key: "dashboard",
+      node: (
+        <div className="h-[210px] w-[140px] md:h-[250px] md:w-[150px]">
+          <DashboardMockup />
+        </div>
+      ),
+    },
+    {
+      key: "website",
+      node: (
+        <div className="h-[210px] w-[200px] md:h-[250px] md:w-[220px]">
+          <WebsiteMockup />
+        </div>
+      ),
+    },
+  ];
+
   return (
     <section id="uiux" className="border-b border-white/6">
       <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-5 py-16 lg:grid-cols-12 lg:px-8 lg:py-20">
@@ -18,26 +61,12 @@ export function UIUX({ onView, onOpen }: { onView: (c: Category) => void; onOpen
           <ViewLink onClick={() => onView("uiux")} />
         </Reveal>
 
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-12 lg:col-span-8">
-          <button
-            onClick={() => onOpen("/images/ui-laptop.png")}
-            className="col-span-2 h-[210px] overflow-hidden rounded-2xl md:col-span-5 md:h-[250px]"
-          >
-            <img
-              src="/images/ui-laptop.png"
-              alt="Product dashboard on laptop"
-              className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
-            />
-          </button>
-          <div className="h-[210px] md:col-span-2 md:h-[250px]">
-            <PhoneMockup />
-          </div>
-          <div className="h-[210px] md:col-span-2 md:h-[250px]">
-            <DashboardMockup />
-          </div>
-          <div className="col-span-2 h-[210px] md:col-span-3 md:h-[250px]">
-            <WebsiteMockup />
-          </div>
+        <div className="lg:col-span-8">
+          <Carousel itemWidth={200} className="w-full">
+            {items.map((item) => (
+              <div key={item.key}>{item.node}</div>
+            ))}
+          </Carousel>
         </div>
       </div>
     </section>
@@ -55,19 +84,25 @@ export function Graphic({ onView, onOpen }: { onView: (c: Category) => void; onO
   return (
     <section id="graphic" className="border-b border-white/6">
       <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-5 py-16 lg:grid-cols-12 lg:px-8 lg:py-20">
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:col-span-7">
-          {posters.map((p) => (
-            <button
-              key={p.src}
-              onClick={() => onOpen(p.src)}
-              className="group relative aspect-[3/4] overflow-hidden rounded-2xl sm:aspect-auto sm:h-[230px]"
-            >
-              <img src={p.src} alt={p.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]" />
-              <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3 text-left text-[11px] text-white opacity-0 transition group-hover:opacity-100">
-                {p.title}
-              </span>
-            </button>
-          ))}
+        <div className="lg:col-span-7">
+          <Carousel itemWidth={160} className="w-full">
+            {posters.map((p) => (
+              <button
+                key={p.src}
+                onClick={() => onOpen(p.src)}
+                className="group relative h-[210px] w-[150px] overflow-hidden rounded-2xl sm:h-[230px] sm:w-[160px]"
+              >
+                <img
+                  src={p.src}
+                  alt={p.title}
+                  className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
+                />
+                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3 text-left text-[11px] text-white opacity-0 transition group-hover:opacity-100">
+                  {p.title}
+                </span>
+              </button>
+            ))}
+          </Carousel>
         </div>
 
         <Reveal className="lg:col-span-5 lg:pl-8">
@@ -121,36 +156,38 @@ export function Video({
           <ViewLink onClick={() => onView("video")} />
         </Reveal>
 
-        <div className="grid grid-cols-12 gap-3 lg:col-span-8">
-          <button
-            onClick={onPlay}
-            className="group relative col-span-12 h-[220px] overflow-hidden rounded-2xl sm:col-span-7 sm:h-[280px]"
-          >
-            <img
-              src="/images/video-camera.png"
-              alt="Cinema camera"
-              className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
-            />
-            <div className="absolute inset-0 bg-black/20" />
-            <span className="absolute top-1/2 left-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#0b0d14] shadow-xl">
-              <span className="pulse-ring absolute inset-0 rounded-full bg-white/40" />
-              <IconPlay size={22} />
-            </span>
-          </button>
-          <div className="col-span-12 grid grid-cols-2 gap-3 sm:col-span-5 sm:grid-rows-2 sm:h-[280px]">
+        <div className="lg:col-span-8">
+          <Carousel itemWidth={240} className="w-full">
             <button
-              onClick={() => onOpen(videoThumbs[0].src)}
-              className="col-span-2 h-[120px] overflow-hidden rounded-2xl sm:h-auto"
+              onClick={onPlay}
+              className="group relative h-[220px] w-[320px] overflow-hidden rounded-2xl sm:h-[280px] sm:w-[380px]"
             >
-              <img src={videoThumbs[0].src} alt={videoThumbs[0].title} className="h-full w-full object-cover transition duration-500 hover:scale-105" />
+              <img
+                src="/images/video-camera.png"
+                alt="Cinema camera"
+                className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+              />
+              <div className="absolute inset-0 bg-black/20" />
+              <span className="absolute top-1/2 left-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#0b0d14] shadow-xl">
+                <span className="pulse-ring absolute inset-0 rounded-full bg-white/40" />
+                <IconPlay size={22} />
+              </span>
             </button>
-            <button onClick={() => onOpen(videoThumbs[1].src)} className="h-[110px] overflow-hidden rounded-2xl sm:h-auto">
-              <img src={videoThumbs[1].src} alt={videoThumbs[1].title} className="h-full w-full object-cover transition duration-500 hover:scale-105" />
-            </button>
-            <button onClick={() => onOpen(videoThumbs[2].src)} className="h-[110px] overflow-hidden rounded-2xl sm:h-auto">
-              <img src={videoThumbs[2].src} alt={videoThumbs[2].title} className="h-full w-full object-cover transition duration-500 hover:scale-105" />
-            </button>
-          </div>
+
+            {videoThumbs.map((t) => (
+              <button
+                key={t.src}
+                onClick={() => onOpen(t.src)}
+                className="h-[220px] w-[180px] overflow-hidden rounded-2xl sm:h-[280px] sm:w-[200px]"
+              >
+                <img
+                  src={t.src}
+                  alt={t.title}
+                  className="h-full w-full object-cover transition duration-500 hover:scale-105"
+                />
+              </button>
+            ))}
+          </Carousel>
         </div>
       </div>
     </section>
@@ -158,40 +195,68 @@ export function Video({
 }
 
 export function Content({ onView, onOpen }: { onView: (c: Category) => void; onOpen: (src: string) => void }) {
+  const contentItems = [
+    {
+      key: "ideas",
+      node: (
+        <div className="h-[210px] w-[160px] sm:h-[230px] sm:w-[170px]">
+          <IdeasCard />
+        </div>
+      ),
+    },
+    {
+      key: "social",
+      node: (
+        <div className="h-[210px] w-[160px] sm:h-[230px] sm:w-[170px]">
+          <SocialMockup />
+        </div>
+      ),
+    },
+    {
+      key: "laptop",
+      node: (
+        <button
+          onClick={() =>
+            onOpen("https://images.pexels.com/photos/1229862/pexels-photo-1229862.jpeg?auto=compress&cs=tinysrgb&w=1200")
+          }
+          className="h-[210px] w-[160px] overflow-hidden rounded-2xl sm:h-[230px] sm:w-[170px]"
+        >
+          <img
+            src="https://images.pexels.com/photos/1229862/pexels-photo-1229862.jpeg?auto=compress&cs=tinysrgb&w=800"
+            alt="Laptop and coffee"
+            className="h-full w-full object-cover transition duration-500 hover:scale-[1.05]"
+          />
+        </button>
+      ),
+    },
+    {
+      key: "mountain",
+      node: (
+        <button
+          onClick={() =>
+            onOpen("https://images.pexels.com/photos/35711550/pexels-photo-35711550.jpeg?auto=compress&cs=tinysrgb&w=1200")
+          }
+          className="h-[210px] w-[160px] overflow-hidden rounded-2xl sm:h-[230px] sm:w-[170px]"
+        >
+          <img
+            src="https://images.pexels.com/photos/35711550/pexels-photo-35711550.jpeg?auto=compress&cs=tinysrgb&w=800"
+            alt="Looking at the mountains"
+            className="h-full w-full object-cover transition duration-500 hover:scale-[1.05]"
+          />
+        </button>
+      ),
+    },
+  ];
+
   return (
     <section id="content" className="border-b border-white/6">
       <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-5 py-16 lg:grid-cols-12 lg:px-8 lg:py-20">
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:col-span-7">
-          <div className="h-[210px] sm:h-[230px]">
-            <IdeasCard />
-          </div>
-          <div className="h-[210px] sm:h-[230px]">
-            <SocialMockup />
-          </div>
-          <button
-            onClick={() =>
-              onOpen("https://images.pexels.com/photos/1229862/pexels-photo-1229862.jpeg?auto=compress&cs=tinysrgb&w=1200")
-            }
-            className="h-[210px] overflow-hidden rounded-2xl sm:h-[230px]"
-          >
-            <img
-              src="https://images.pexels.com/photos/1229862/pexels-photo-1229862.jpeg?auto=compress&cs=tinysrgb&w=800"
-              alt="Laptop and coffee"
-              className="h-full w-full object-cover transition duration-500 hover:scale-[1.05]"
-            />
-          </button>
-          <button
-            onClick={() =>
-              onOpen("https://images.pexels.com/photos/35711550/pexels-photo-35711550.jpeg?auto=compress&cs=tinysrgb&w=1200")
-            }
-            className="h-[210px] overflow-hidden rounded-2xl sm:h-[230px]"
-          >
-            <img
-              src="https://images.pexels.com/photos/35711550/pexels-photo-35711550.jpeg?auto=compress&cs=tinysrgb&w=800"
-              alt="Looking at the mountains"
-              className="h-full w-full object-cover transition duration-500 hover:scale-[1.05]"
-            />
-          </button>
+        <div className="lg:col-span-7">
+          <Carousel itemWidth={170} className="w-full">
+            {contentItems.map((item) => (
+              <div key={item.key}>{item.node}</div>
+            ))}
+          </Carousel>
         </div>
 
         <Reveal className="lg:col-span-5 lg:pl-8">
