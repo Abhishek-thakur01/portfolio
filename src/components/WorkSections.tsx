@@ -1,5 +1,5 @@
 import type { Category } from "../data";
-import { DashboardMockup, IdeasCard, PhoneMockup, SocialMockup, WebsiteMockup } from "./Mockups";
+import { IdeasCard, PhoneMockup, SocialMockup } from "./Mockups";
 import { Reveal, SectionLabel, ViewLink } from "./Reveal";
 import { IconPlay } from "./Icons";
 import { Carousel } from "./Carousel";
@@ -20,12 +20,39 @@ export function UIUX({ onView, onOpen }: { onView: (c: Category) => void; onOpen
     <div key="phone" className="h-[210px] w-[140px] md:h-[250px] md:w-[150px]">
       <PhoneMockup />
     </div>,
-    <div key="dashboard" className="h-[210px] w-[140px] md:h-[250px] md:w-[150px]">
-      <DashboardMockup />
-    </div>,
-    <div key="website" className="h-[210px] w-[200px] md:h-[250px] md:w-[220px]">
-      <WebsiteMockup />
-    </div>,
+    <button
+      key="ui-1"
+      onClick={() => onOpen("https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=1200")}
+      className="h-[210px] w-[180px] overflow-hidden rounded-2xl md:h-[250px] md:w-[200px]"
+    >
+      <img
+        src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800"
+        alt="UI design mockup"
+        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
+      />
+    </button>,
+    <button
+      key="ui-2"
+      onClick={() => onOpen("https://images.pexels.com/photos/326503/pexels-photo-326503.jpeg?auto=compress&cs=tinysrgb&w=1200")}
+      className="h-[210px] w-[180px] overflow-hidden rounded-2xl md:h-[250px] md:w-[200px]"
+    >
+      <img
+        src="https://images.pexels.com/photos/326503/pexels-photo-326503.jpeg?auto=compress&cs=tinysrgb&w=800"
+        alt="App interface"
+        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
+      />
+    </button>,
+    <button
+      key="ui-3"
+      onClick={() => onOpen("https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=1200")}
+      className="h-[210px] w-[180px] overflow-hidden rounded-2xl md:h-[250px] md:w-[200px]"
+    >
+      <img
+        src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800"
+        alt="Web design"
+        className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
+      />
+    </button>,
   ];
 
   return (
