@@ -37,40 +37,38 @@ export function Hero() {
             and <span className="text-[#8b7cff]">content.</span>
           </h1>
           <p className="mt-6 max-w-[460px] text-[14px] leading-relaxed text-white/50">
-            I'm a creative designer and content creator, focused on building modern websites, eye-catching visuals and
-            engaging content that connect with people.
+            I'm a creative Graphic & UI Designer who turns ideas into impactful visuals. I specialize in branding, social media design, UI, video editing, reel shooting and short-form content creation.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-5">
             <a
               href="#uiux"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-[13px] font-semibold text-[#0b0d14] transition hover:bg-white/90"
+              className="inline-flex items-center gap-2 rounded-full bg-[#8b7cff] px-5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-[#7a6bef]"
             >
               View My Work
               <IconArrowRight size={14} />
             </a>
             <button
               onClick={downloadResume}
-              className="inline-flex items-center gap-2 text-[13px] font-medium text-white/70 transition hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-[13px] font-medium text-white/80 transition hover:border-white/30 hover:text-white"
             >
               Download Resume
               <IconDownload size={14} />
             </button>
           </div>
 
-          <div className="mt-8 flex items-center gap-3">
-            {socials.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={s.label}
-                className="icon-btn flex h-9 w-9 items-center justify-center rounded-full text-white/55 hover:bg-white/5 hover:text-white"
-              >
-                <s.icon size={16} />
-              </a>
-            ))}
+          <div className="mt-10">
+            <p className="mb-3 text-[11px] font-medium tracking-wide text-white/40">Tools I Use</p>
+            <div className="flex flex-wrap items-center gap-3">
+              {["Canva", "Figma", "Illustrator", "Photoshop", "Premiere Pro", "CapCut"].map((t) => (
+                <span
+                  key={t}
+                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-medium text-white/70"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
 
